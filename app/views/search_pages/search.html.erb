@@ -1,0 +1,34 @@
+<% provide(:title, 'Search') %>
+<h1>Search for Games/Developers/Backgrounds/Emotes</h1>
+
+<div class="search-container">
+<h2>Search For Games by Name</h2>
+<%= form_tag do %>
+  <input type="hidden" name="search_type" value="game_by_name">
+  <div class="form-group">
+    <label for="minimumPrice">Name</label>
+    <input type="text" class="form-control" id="name" name="name">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">Search</button>
+  </div>
+<% end %>
+</div>
+
+<div class="search-container">
+<h2>Search For Games in a Price Range</h2>
+<%= form_tag do %>
+  <input type="hidden" name="search_type" value="game_by_price_range">
+  <div class="form-group">
+    <label for="minimumPrice">Minimum Price</label>
+    <input type="text" class="form-control" id="minimumPrice" name="minimum_price" value="0">
+  </div>
+  <div class="form-group">
+    <label for="maximumPrice">Maximum Price</label>
+    <input type="text" class="form-control" id="maximumPrice" name="maximum_price" value="1000">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">Search</button>
+  </div>
+<% end %>
+</div>

@@ -6,4 +6,5 @@ class Game < ApplicationRecord
   validates :price, presence: true, numericality: true
   validates :release_date, presence: true, timeliness: { type: :date }
   validates :description, presence: true
+  validates :image, url: true
 end

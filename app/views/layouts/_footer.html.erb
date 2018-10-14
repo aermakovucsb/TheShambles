@@ -1,13 +1,13 @@
 <footer class="footer">
   <small>
-    <a href="/">GTrack</a>
+    <%= link_to "GTrack", root_path %>
     |
     <a href="https://store.steampowered.com/">Steam Price Tracker</a>
   </small>
   <nav>
     <ul>
-      <li><%= link_to "About",   '#' %></li>
-      <li><%= link_to "Games", '#' %></li>
+      <li><%= link_to "About", static_pages_about_path %></li>
+      <li><%= link_to "Games", games_path %></li>
       <li><a href="https://store.steampowered.com/">Steam</a></li>
     </ul>
   </nav>
