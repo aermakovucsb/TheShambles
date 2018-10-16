@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181014202816) do
+ActiveRecord::Schema.define(version: 20181016163048) do
+
+  create_table "backgrounds", force: :cascade do |t|
+    t.text "name"
+    t.integer "price"
+    t.text "url"
+    t.integer "appid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "chefs", force: :cascade do |t|
   end
