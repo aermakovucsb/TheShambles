@@ -27,7 +27,7 @@
 
 <p class="text-center">
   <% @game.genres.each do |genre| %>
-    <span class="badge badge-success badge-genre"><%= genre.name %></span>
+    <span class="badge badge-success badge-genre"><%= link_to genre.name, genre%></span>
   <% end %>
 </p>
 
