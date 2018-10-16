@@ -8,7 +8,9 @@
     <tr>
       <th>Name</th>
       <th>Game Count</th>
+      <% if session[:gamer_id] and session[:user_type] == "admin" %>
       <th colspan="2">Options</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -17,8 +19,10 @@
       <tr>
         <td><%= link_to genre.name, genre %></td>
         <td><%= genre.games.count %></td>
+        <% if session[:gamer_id] and session[:user_type] == "admin" %>
         <td><%= link_to 'Edit', edit_genre_path(genre) %></td>
         <td><%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +30,6 @@
 
 <br>
 
+<% if session[:gamer_id] and session[:user_type] == "admin" %>
 <%= link_to 'New Genre', new_genre_path %>
+<% end %>
