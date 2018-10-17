@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20181016163048) do
     t.text "name"
     t.integer "price"
     t.text "url"
-    t.integer "appid"
+    t.integer "steam_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
