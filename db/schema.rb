@@ -21,9 +21,6 @@ ActiveRecord::Schema.define(version: 20181016163048) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "chefs", force: :cascade do |t|
-  end
-
   create_table "gamers", force: :cascade do |t|
     t.string "gamername"
     t.string "email"
