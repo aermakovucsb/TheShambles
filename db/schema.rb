@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20181016163048) do
   create_table "backgrounds", force: :cascade do |t|
     t.text "name"
     t.integer "price"
-    t.text "url"
+    t.text "image"
     t.integer "steam_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -20,7 +20,7 @@ class SearchPagesController < ApplicationController
       elsif params[:search_type] == "game_by_background_count"
       	params[:minimum_Background] = params[:minimum_Background].empty? ? 0 : params[:minimum_Background]
 				params[:maximum_Background] = params[:maximum_Background].empty? ? 10 : params[:maximum_Background]
-				@games = Game.select("games.*").joins(:backgrounds).group("backgrounds.steam_id").having("count(backgrounds.steam_id) >= :min AND count(backgrounds.steam_id) <= :max", {min: params[:minimum_Background], max: params[:maximum_Background]})
+				@games = Game.select("games.*").joins(:backgrounds).group("games.steam_id").having("count(backgrounds.steam_id) >= :min AND count(backgrounds.steam_id) <= :max", {min: params[:minimum_Background], max: params[:maximum_Background]})
 				@search_title = "Games with #{params[:minimum_Background]} to #{params[:maximum_Background]} number of background"
 				render "search_result_game_by_name"
 			end
