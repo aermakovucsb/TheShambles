@@ -7,4 +7,5 @@ class Game < ApplicationRecord
   validates :release_date, presence: true, timeliness: { type: :date }
   validates :description, presence: true
   validates :image, url: true
+  has_many :comments, dependent: :destroy
 end
