@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181022154141) do
+ActiveRecord::Schema.define(version: 20181023181930) do
+
+  create_table "backgrounds", force: :cascade do |t|
+    t.text "name"
+    t.integer "price"
+    t.text "image"
+    t.integer "steam_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.text "name"
+    t.integer "price"
+    t.text "image"
+    t.integer "steam_id"
+    t.integer "foil"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "backgrounds", force: :cascade do |t|
     t.text "name"
