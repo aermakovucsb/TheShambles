@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181016180402) do
+ActiveRecord::Schema.define(version: 20181022154141) do
 
   create_table "backgrounds", force: :cascade do |t|
     t.text "name"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(version: 20181016180402) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+    
+  create_table "comments", force: :cascade do |t|
+    t.text "description"
+    t.integer "gamer_id"
+    t.integer "game_id"
+  end
 
   create_table "gamers", force: :cascade do |t|
     t.string "gamername"
@@ -28,6 +34,7 @@ ActiveRecord::Schema.define(version: 20181016180402) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "user_type"
+    t.boolean "admin", default: false
   end
 
   create_table "games", force: :cascade do |t|
@@ -48,6 +55,13 @@ ActiveRecord::Schema.define(version: 20181016180402) do
 
   create_table "genres", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.integer "gamer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
