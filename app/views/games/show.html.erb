@@ -27,11 +27,13 @@
 
 <p class="text-center">
   <% @game.genres.each do |genre| %>
-    <span class="badge badge-success badge-genre"><%= genre.name %></span>
+    <span class="badge badge-success badge-genre"><%= link_to genre.name, genre%></span>
   <% end %>
 </p>
 
 <div class="clearfix clearfix-divider"></div>
 
+<% if session[:gamer_id] and session[:user_type] == "admin" %>
 <%= link_to 'Edit', edit_game_path(@game) %> |
+<% end %>
 <%= link_to 'Back', games_path %>

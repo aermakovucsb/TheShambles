@@ -28,6 +28,9 @@ class BackgroundsController < ApplicationController
 
     respond_to do |format|
       if @background.save
+        print "testing"
+        game = Game.find(params[:background][:steam_id])
+        @background.games << game
         format.html { redirect_to @background, notice: 'Background was successfully created.' }
         format.json { render :show, status: :created, location: @background }
       else

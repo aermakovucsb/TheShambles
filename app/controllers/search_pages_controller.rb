@@ -18,11 +18,11 @@ class SearchPagesController < ApplicationController
 				@search_title = "Games between $#{params[:minimum_price]} and $#{params[:maximum_price]}"
 				render "search_result_game_by_price_range"
       elsif params[:search_type] == "game_by_background_count"
-      	params[:minimum_Background] = params[:minimum_Background].empty? ? 0 : params[:minimum_Background]
+      	params[:minimum_Background] = params[:minimum_Background].empty? ? 1 : params[:minimum_Background]
 				params[:maximum_Background] = params[:maximum_Background].empty? ? 10 : params[:maximum_Background]
-				@games = Game.select("games.*").joins(:backgrounds).group("games.steam_id").having("count(backgrounds.steam_id) >= :min AND count(backgrounds.steam_id) <= :max", {min: params[:minimum_Background], max: params[:maximum_Background]})
+				@games = Game.select("games.*").joins("JOIN  backgrounds ON backgrounds.steam_id = games.steam_id").group("backgrounds.steam_id").having("count(backgrounds.steam_id) >= :min AND count(backgrounds.steam_id) <= :max", {min: params[:minimum_Background].to_i, max: params[:maximum_Background].to_i})
 				@search_title = "Games with #{params[:minimum_Background]} to #{params[:maximum_Background]} number of background"
-				render "search_result_game_by_name"
+				render "search_result_game_by_price_range"
 			end
     else
       #pass

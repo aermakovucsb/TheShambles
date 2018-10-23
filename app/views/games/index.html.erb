@@ -10,10 +10,9 @@
       <th>Steam ID</th>
       <th>Price (USD)</th>
       <th>Release date</th>
-      <% if false %>
-      <th>Tags</th>
-      <% end %>
+      <% if session[:gamer_id] and session[:user_type] == "admin" %>
       <th colspan="2">Options</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -24,11 +23,10 @@
 	<td><%= link_to game.steam_id, "https://store.steampowered.com/app/#{game.steam_id}", target: "_blank" %></td>
         <td><%= game.price %></td>
 	<td><%= game.release_date %></td>
-	<% if false %>
-	<td><%= game.genres.map(&:name).join(', ') %></td>
-	<% end %>
+      <% if session[:gamer_id] and session[:user_type] == "admin" %>
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -36,4 +34,6 @@
 
 <br>
 
+<% if session[:gamer_id] and session[:user_type] == "admin" %>
 <%= link_to 'New Game', new_game_path %>
+<% end %>
