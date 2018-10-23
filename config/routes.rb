@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :backgrounds
   resources :cards
   get 'static_pages/about'
   root "pages#home"

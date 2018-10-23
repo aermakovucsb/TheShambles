@@ -34,6 +34,17 @@
 </div>
 
 <div class="search-container">
+<h2>Search For Games by number of backgrounds</h2>
+<%= form_tag do %>
+  <input type="hidden" name="search_type" value="game_by_background_count">
+  <div class="form-group">
+    <label for="minimumBackground">Minimum Backgrounds</label>
+    <input type="text" class="form-control" id="minimumBackground" name="minimum_Background" value="1">
+  </div>
+  <div class="form-group">
+    <label for="maximumBackground">Maximum Backgrounds</label>
+    <input type="text" class="form-control" id="maximumBackground" name="maximum_Background" value="10">
+  </div>
 <h2>Search For Games by number of cards</h2>
 <%= form_tag do %>
   <input type="hidden" name="search_type" value="game_by_card_range">

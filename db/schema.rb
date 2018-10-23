@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 20181023181930) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "backgrounds", force: :cascade do |t|
+    t.text "name"
+    t.integer "price"
+    t.text "image"
+    t.integer "steam_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+    
   create_table "comments", force: :cascade do |t|
     t.text "description"
     t.integer "gamer_id"
