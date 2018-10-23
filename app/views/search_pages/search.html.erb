@@ -32,3 +32,24 @@
   </div>
 <% end %>
 </div>
+
+<div class="search-container">
+<h2>Search For Games by number of cards</h2>
+<%= form_tag do %>
+  <input type="hidden" name="search_type" value="game_by_card_range">
+  <div class="form-group">
+    <label for="minimumNumOfCards">Minimum number of cards</label>
+    <input type="text" class="form-control" id="minimumNumOfCards" name="minimum_number_of_cards" value="5">
+  </div>
+  <div class="form-group">
+    <label for="maximumNumOfCards">Maximum number of cards</label>
+    <input type="text" class="form-control" id="maximumNumOfCards" name="maximum_number_of_cards" value="15">
+  </div>
+  <div class="form-group">
+    <input type="checkbox" name="foil" value=0> Search for foil cards<br>
+</div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">Search</button>
+  </div>
+<% end %>
+</div>

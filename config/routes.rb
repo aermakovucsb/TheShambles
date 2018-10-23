@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cards
   get 'static_pages/about'
   root "pages#home"
   get 'pages/home', to: 'pages#home'
