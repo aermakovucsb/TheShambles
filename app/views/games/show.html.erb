@@ -31,6 +31,13 @@
   <% end %>
 </p>
 
+<p class="text-center">
+  <% @game.companies.each do |company| %>
+    <span class="badge badge-success badge-genre"><%= link_to company.name, company%></span>
+  <% end %>
+</p>
+
+
 <div class="clearfix clearfix-divider"></div>
 
 <% if session[:gamer_id] and session[:user_type] == "admin" %>

@@ -72,3 +72,4 @@ class CompaniesController < ApplicationController
       params.require(:company).permit(:name)
     end
 end
+

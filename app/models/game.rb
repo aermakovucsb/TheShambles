@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
   has_and_belongs_to_many :genres
+  has_and_belongs_to_many :companies
 
   validates :steam_id, presence: true, numericality: {only_integer: true}, uniqueness: true
   validates :name, presence: true
