@@ -1,13 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
     rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
-  
-  protected
-  
-  def resource_not_found
-  end
-
-  	def current_gamer
+  	helper_method :current_gamer, :logged_in?
+    def current_gamer
 		@current_gamer ||= Gamer.find(session[:gamer_id]) if session[:gamer_id]
 	end
 
@@ -21,4 +16,11 @@ class ApplicationController < ActionController::Base
 			redirect_to root_path
 		end
 	end
+
+  protected
+  
+  def resource_not_found
+  end
+
+  	
 end

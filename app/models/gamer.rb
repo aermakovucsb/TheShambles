@@ -7,5 +7,6 @@ class Gamer < ApplicationRecord
                     uniqueness: { case_sensitive: false }
    has_secure_password
    validates :password, presence: true, length: { minimum: 5 },allow_nil: true
-
+   has_many :messages, dependent: :destroy
+   has_many :comments, dependent: :destroy
 end
