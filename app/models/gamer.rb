@@ -15,5 +15,6 @@ class Gamer < ApplicationRecord
 
   has_many :comments
   has_many :games, through: :comments
-  
+
+  has_and_belongs_to_many :games
 end

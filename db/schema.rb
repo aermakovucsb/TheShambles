@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181026051906) do
+ActiveRecord::Schema.define(version: 20181026172328) do
 
   create_table "backgrounds", force: :cascade do |t|
     t.text "name"
@@ -66,6 +66,11 @@ ActiveRecord::Schema.define(version: 20181026051906) do
     t.string "password_digest"
     t.string "user_type"
     t.boolean "admin", default: false
+  end
+
+  create_table "gamers_games", id: false, force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.integer "gamer_id", null: false
   end
 
   create_table "games", force: :cascade do |t|
