@@ -1,0 +1,7 @@
+Setting up a crontab to execute a script:
+	* * * * * cd /home/saquib2527/Desktop && /usr/bin/python /home/saquib2527/Desktop/hello.py
+
+Getting steam ID etc.:
+	https://stackoverflow.com/questions/13784059/how-to-get-the-price-of-an-app-in-steam-webapi
+	http://api.steampowered.com/ISteamApps/GetAppList/v0001/
+	http://store.steampowered.com/api/appdetails?appids=57690&cc=us&l=en
