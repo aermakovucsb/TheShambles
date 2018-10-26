@@ -1,0 +1,68 @@
+<% provide(:title, 'Companies') %>
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Genres</h1>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Game Count</th>
+      <% if session[:gamer_id] and session[:user_type] == "admin" %>
+      <th colspan="2">Options</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= link_to company.name, company %></td>
+        <td><%= company.games.count %></td>
+        <% if session[:gamer_id] and session[:user_type] == "admin" %>
+        <td><%= link_to 'Edit', edit_company_path(company) %></td>
+        <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if session[:gamer_id] and session[:user_type] == "admin" %>
+<%= link_to 'New Company', new_genre_path %>
+<% end %>
+
+
+
+<%- #Some old code %>
+<% if false %>
+<p id="notice"><%= notice %></p>
+
+<h1>Companies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= company.name %></td>
+        <td><%= link_to 'Show', company %></td>
+        <td><%= link_to 'Edit', edit_company_path(company) %></td>
+        <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Company', new_company_path %>
+<% end %>

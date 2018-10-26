@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   resources :games
   resources :genres
+  resources :companies
   mount ActionCable.server => '/cable'
   get '/chat', to: 'chatrooms#show'
   resources :messages, only: [:create]

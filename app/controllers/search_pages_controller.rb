@@ -17,6 +17,12 @@ class SearchPagesController < ApplicationController
 				@games = Game.where("price >= ?", params[:minimum_price]).where("price <= ?", params[:maximum_price])
 				@search_title = "Games between $#{params[:minimum_price]} and $#{params[:maximum_price]}"
 				render "search_result_game_by_price_range"
+			elsif params[:search_type] == "game_by_company"
+				if not params[:name].empty?
+					@companies= Company.where("name LIKE ?", "%#{params[:name]}%")
+	  			@search_title = "Games created by '#{params[:name]}'"
+					render "search_result_game_by_company"
+			  end
       elsif params[:search_type] == "game_by_background_count"
       	params[:minimum_Background] = params[:minimum_Background].empty? ? 1 : params[:minimum_Background]
 				params[:maximum_Background] = params[:maximum_Background].empty? ? 10 : params[:maximum_Background]
