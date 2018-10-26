@@ -67,6 +67,12 @@ def getGameDetails(appid):
     random.shuffle(company_ids)
     game['company_ids'] = company_ids[0:company_count]
 
+    # dummy gamers
+    gamer_count = random.randint(1, gamerCount + 1)
+    gamer_ids = range(gamerCount)
+    random.shuffle(gamer_ids)
+    game['gamer_ids'] = gamer_ids[0:gamer_count]
+
     game['image'] = data[appid]['data']['header_image']
     return game
 
@@ -107,12 +113,17 @@ def generateSeedFile(filename='seeds.rb'):
             for genre_id in game['genre_ids']:
                 genre_ids += 'genres[{0}].id, '.format(genre_id)
             genre_ids += ']'
-            #genre
+            #company
             company_ids = '['
             for company_id in game['company_ids']:
                 company_ids += 'companies[{0}].id, '.format(company_id)
             company_ids += ']'
-            fh.write("\t{{steam_id: {0}, name: '{1}', price: {2}, release_date: '{3}', description: '{4}', image: '{5}', genre_ids: {6}, company_ids: {7}}},\n".format(game['steam_id'], game['name'].replace("'", "\\'").encode('utf-8'), game['price'], game['release_date'], game['description'].encode('utf-8'), game['image'], genre_ids, company_ids))
+            #gamer
+            gamer_ids = '['
+            for gamer_id in game['gamer_ids']:
+                gamer_ids += 'gamers[{0}].id, '.format(gamer_id)
+            gamer_ids += ']'
+            fh.write("\t{{steam_id: {0}, name: '{1}', price: {2}, release_date: '{3}', description: '{4}', image: '{5}', genre_ids: {6}, company_ids: {7}, gamer_ids: {8}}},\n".format(game['steam_id'], game['name'].replace("'", "\\'").encode('utf-8'), game['price'], game['release_date'], game['description'].encode('utf-8'), game['image'], genre_ids, company_ids, gamer_ids))
         fh.write('])\n\n')
 
         #game ratings
@@ -125,7 +136,7 @@ def generateSeedFile(filename='seeds.rb'):
             fh.write('\n')
         fh.write('\n\n')
 
-        #game ratings
+        #game comments
         for x in range(len(Games)):
             fh.write("games[{0}].comments ".format(x))
             user_ids = range(1, gamerCount + 1)
