@@ -9,15 +9,18 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 20181023175037) do
+
+ActiveRecord::Schema.define(version: 20181026051906) do
 
   create_table "backgrounds", force: :cascade do |t|
     t.text "name"
     t.integer "price"
-    t.text "image"
-    t.integer "steam_id"
+    t.text "url"
+    t.integer "appid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "game_id"
+    t.index ["game_id"], name: "index_backgrounds_on_game_id"
   end
 
   create_table "cards", force: :cascade do |t|
@@ -30,15 +33,6 @@ ActiveRecord::Schema.define(version: 20181023175037) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "backgrounds", force: :cascade do |t|
-    t.text "name"
-    t.integer "price"
-    t.text "image"
-    t.integer "steam_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-    
   create_table "comments", force: :cascade do |t|
     t.text "description"
     t.integer "gamer_id"
@@ -54,6 +48,14 @@ ActiveRecord::Schema.define(version: 20181023175037) do
   create_table "companies_games", id: false, force: :cascade do |t|
     t.integer "company_id", null: false
     t.integer "game_id", null: false
+  end
+
+  create_table "game_ratings", id: false, force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "gamer_id"
   end
 
   create_table "gamers", force: :cascade do |t|
