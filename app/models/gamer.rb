@@ -12,4 +12,8 @@ class Gamer < ApplicationRecord
 
   has_many :game_ratings
   has_many :games, through: :game_ratings
+
+  has_many :comments
+  has_many :games, through: :comments
+  
 end
