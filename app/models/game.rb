@@ -9,6 +9,9 @@ class Game < ApplicationRecord
 
   has_many :game_ratings
   has_many :gamers, through: :game_ratings
+  
+  has_many :comments
+  has_many :gamers, through: :comments
  
   validates :steam_id, presence: true, numericality: {only_integer: true}, uniqueness: true
   validates :name, presence: true

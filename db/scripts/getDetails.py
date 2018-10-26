@@ -71,7 +71,7 @@ def getGameDetails(appid):
     return game
 
 # generates seed file from: Games
-def generateSeedFile(filename='seed.rb'):
+def generateSeedFile(filename='seeds.rb'):
     with open(filename, 'w') as fh:
         fh.write('# for clean setup please run the following commands:\n')
         fh.write('#   rails db:drop\n')
@@ -125,6 +125,16 @@ def generateSeedFile(filename='seed.rb'):
             fh.write('\n')
         fh.write('\n\n')
 
+        #game ratings
+        for x in range(len(Games)):
+            fh.write("games[{0}].comments ".format(x))
+            user_ids = range(1, gamerCount + 1)
+            random.shuffle(user_ids)
+            for y in user_ids[0:random.randint(1, gamerCount)]:
+                fh.write("<< Comment.new(gamer: gamers[{0}], description: '{1}') ".format(y, lorem.paragraph()))
+            fh.write('\n')
+        fh.write('\n\n')
+
 if __name__ == '__main__':
     with open(IDfile) as fh:
         reader = csv.DictReader(fh)
@@ -137,5 +147,5 @@ if __name__ == '__main__':
                 numGames += 1
                 if numGames == 2:
                     break
-    generateSeedFile('seed.rb')
+    generateSeedFile('seeds.rb')
 
