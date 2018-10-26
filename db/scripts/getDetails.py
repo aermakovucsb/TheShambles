@@ -155,6 +155,24 @@ def generateSeedFile(filename='seeds.rb'):
         fh.write("])")
         fh.write("\n\n")
 
+        #backgrounds
+        fh.write("backgrounds = Background.create([\n")
+        fh.write("\t{name: 'All Tidied Up', price: 0.03, image: 'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxH5rd9eDAjcFyv45SRYAFMIcKL_PArgVSL403ulRUWEndVKv1gZmLBQ07IwAA777zewE40vLJJjsbvd_nx4LdwvKnN-jQwmlQuJVz0urE9oij2Rq-uxQsQbMDMg', game_id: 1},\n")
+        fh.write("])")
+        fh.write("\n\n")
+
+        #emotes
+        fh.write("emotes = Emote.create([\n")
+        fh.write("\t{name: 'shield_orochi4', price: 0.94, image: 'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxH5rd9eDAjcFyv45SRYAFMIcKL_PArgVSL403ulRUWEndVKv1hJ6GBQ07fFRR5uP9fl5ji6GQJm4VtYvgw9bZk6akZLjUw24HusRz2rjErYql2BqkpRQNCzaaig/360fx360f', game_id: 1},\n")
+        fh.write("])")
+        fh.write("\n\n")
+
+        #cards
+        fh.write("cards = Card.create([\n")
+        fh.write("\t{name: 'Salien Spaceship', price: 0.05, image: 'https://steamcommunity-a.akamaihd.net/economy/image/IzMF03bk9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdA3g5gMEPvUZZEaiHLrVJRsl8vGuCUY7Cjc9ehDNVzDMOfXSviSQrcex4NM6b8wT3qOeDV0fnaTTBPCnQDBhhEOIJYGXQ_GHx5b7HFD7IErslRgwFfKJR9WVOP87cOhU_0tEM8jO9wxYpGEN9PM9Wd0m5xWYXNK8awSwTIs5fnXalcpLfjVZnPRU_Wuq2A-nKa4DxwXkgVU41TKEfYI6VsSG5rpPzaOnGc68hIvw2RD05Cio/120x140', foil: false, game_id: 1},\n")
+        fh.write("])")
+        fh.write("\n\n")
+
 if __name__ == '__main__':
     with open(IDfile) as fh:
         reader = csv.DictReader(fh)
@@ -165,7 +183,7 @@ if __name__ == '__main__':
             else:
                 Games.append(game)
                 numGames += 1
-                if numGames == 2:
+                if numGames == 100:
                     break
     generateSeedFile('seeds.rb')
 

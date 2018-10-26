@@ -10,27 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181026213324) do
+ActiveRecord::Schema.define(version: 20181026224715) do
 
   create_table "backgrounds", force: :cascade do |t|
-    t.text "name"
-    t.integer "price"
-    t.text "url"
-    t.integer "appid"
+    t.string "name"
+    t.float "price"
+    t.string "image"
+    t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "game_id"
     t.index ["game_id"], name: "index_backgrounds_on_game_id"
   end
 
   create_table "cards", force: :cascade do |t|
-    t.text "name"
-    t.integer "price"
-    t.text "image"
-    t.integer "steam_id"
-    t.integer "foil"
+    t.string "name"
+    t.float "price"
+    t.string "image"
+    t.boolean "foil"
+    t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_cards_on_game_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 20181026213324) do
   create_table "companies_games", id: false, force: :cascade do |t|
     t.integer "company_id", null: false
     t.integer "game_id", null: false
+  end
+
+  create_table "emotes", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.string "image"
+    t.integer "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_emotes_on_game_id"
   end
 
   create_table "game_ratings", id: false, force: :cascade do |t|
