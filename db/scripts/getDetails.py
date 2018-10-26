@@ -146,6 +146,15 @@ def generateSeedFile(filename='seeds.rb'):
             fh.write('\n')
         fh.write('\n\n')
 
+        #game requests
+        requested_ids = [958000, 958010, 958030, 958060, 958240, 958300, 958310, 958420, 958430, 958790]
+        fh.write("requests = Request.create([\n")
+        for x in range(1, len(requested_ids) + 1):
+            # x holds user id (x + 1 to skip over admin), x - 1 holds index to requested id
+            fh.write("\t{{steam_id: {0}, status: '{1}', gamer_id: {2}}},\n".format(requested_ids[x - 1], "pending", (x + 1)))
+        fh.write("])")
+        fh.write("\n\n")
+
 if __name__ == '__main__':
     with open(IDfile) as fh:
         reader = csv.DictReader(fh)
