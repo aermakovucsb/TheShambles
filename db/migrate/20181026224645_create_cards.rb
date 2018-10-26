@@ -1,11 +1,11 @@
 class CreateCards < ActiveRecord::Migration[5.1]
   def change
     create_table :cards do |t|
-      t.text :name
-      t.integer :price
-      t.text :image
-      t.integer :steam_id
-      t.integer :foil
+      t.string :name
+      t.float :price
+      t.string :image
+      t.boolean :foil
+      t.references :game, foreign_key: true
 
       t.timestamps
     end
