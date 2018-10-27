@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181026224715) do
+ActiveRecord::Schema.define(version: 20181027170001) do
 
   create_table "backgrounds", force: :cascade do |t|
     t.string "name"
@@ -105,9 +105,30 @@ ActiveRecord::Schema.define(version: 20181026224715) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "graphics", force: :cascade do |t|
+    t.string "name"
+    t.integer "rank"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "memories", force: :cascade do |t|
+    t.string "name"
+    t.integer "rank"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.integer "gamer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "processors", force: :cascade do |t|
+    t.string "name"
+    t.integer "rank"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -119,6 +140,19 @@ ActiveRecord::Schema.define(version: 20181026224715) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["gamer_id"], name: "index_requests_on_gamer_id"
+  end
+
+  create_table "system_requirements", force: :cascade do |t|
+    t.integer "game_id"
+    t.integer "processor_id"
+    t.integer "graphic_id"
+    t.integer "memory_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_system_requirements_on_game_id"
+    t.index ["graphic_id"], name: "index_system_requirements_on_graphic_id"
+    t.index ["memory_id"], name: "index_system_requirements_on_memory_id"
+    t.index ["processor_id"], name: "index_system_requirements_on_processor_id"
   end
 
 end

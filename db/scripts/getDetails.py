@@ -9,7 +9,11 @@ IDfile = 'IDs.csv' # file containing steam ids and names
 
 numGames = 0 # loop control
 
+gameCount = 100 # number of games
 gamerCount = 10 # number of gamers
+processorCount = 10 # number of processors
+graphicCount = 10 # number of graphics card
+memoryCount = 10 # number of memories
 
 Games = [] # Game model data
 
@@ -173,6 +177,35 @@ def generateSeedFile(filename='seeds.rb'):
         fh.write("])")
         fh.write("\n\n")
 
+        #processor
+        fh.write("processors = Processor.create([\n")
+        for x in range(1, processorCount + 1):
+            fh.write("\t{{name: 'Processor {0}', rank: {0}}},\n".format(x))
+        fh.write("])")
+        fh.write("\n\n")
+
+        #graphic
+        fh.write("graphics = Graphic.create([\n")
+        for x in range(1, graphicCount + 1):
+            fh.write("\t{{name: 'Graphic {0}', rank: {0}}},\n".format(x))
+        fh.write("])")
+        fh.write("\n\n")
+
+        #memory
+        fh.write("memories = Memory.create([\n")
+        for x in range(1, memoryCount + 1):
+            fh.write("\t{{name: 'Memory {0}', rank: {0}}},\n".format(x))
+        fh.write("])")
+        fh.write("\n\n")
+
+        #system rquirements
+        fh.write("system_requirements = SystemRequirement.create([\n")
+        for x in range(1, gameCount + 1):
+            fh.write("\t{{game_id: {0}, processor_id: {1}, graphic_id: {2}, memory_id: {3}}},\n".format(x, random.randint(1, processorCount + 1), random.randint(1, graphicCount + 1), random.randint(1, memoryCount + 1)))
+        fh.write("])")
+        fh.write("\n\n")
+
+
 if __name__ == '__main__':
     with open(IDfile) as fh:
         reader = csv.DictReader(fh)
@@ -183,7 +216,7 @@ if __name__ == '__main__':
             else:
                 Games.append(game)
                 numGames += 1
-                if numGames == 100:
+                if numGames == gameCount:
                     break
     generateSeedFile('seeds.rb')
 
