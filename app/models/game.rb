@@ -14,6 +14,14 @@ class Game < ApplicationRecord
 
   has_and_belongs_to_many :genres
   has_and_belongs_to_many :gamers
+  has_many :likes, dependent: :destroy
+  def thumbs_up_total
+    self.likes.where(like: true).size
+  end
+  
+  def thumbs_down_total
+    self.likes.where(like: false).size    
+  end
  
   validates :steam_id, presence: true, numericality: {only_integer: true}, uniqueness: true
   validates :name, presence: true
@@ -21,4 +29,7 @@ class Game < ApplicationRecord
   validates :release_date, presence: true, timeliness: { type: :date }
   validates :description, presence: true
   validates :image, url: true
+
+
+
 end

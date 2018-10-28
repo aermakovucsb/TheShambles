@@ -6,6 +6,13 @@ Rails.application.routes.draw do
   get 'pages/home', to: 'pages#home'
   #root :to => "games#index"
 
+  resources :games do
+    resources :comments, only: [:create]
+    member do 
+      post 'like'
+    end
+  end
+
   get 'search_pages/search'
   post 'search_pages/search'
   get '/register', to: 'gamers#new'

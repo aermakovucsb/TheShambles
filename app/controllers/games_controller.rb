@@ -1,5 +1,7 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :like]
+  before_action :require_user, except: [:index, :show, :like]
+  before_action :require_user_like, only: [:like]
 
   # GET /games
   # GET /games.json
@@ -48,6 +50,16 @@ class GamesController < ApplicationController
       end
     end
   end
+  def like
+    like = Like.create(like: params[:like], gamer: current_gamer, game: @game)
+    if like.valid?
+      flash[:success] = "Your selection was succesful"
+      redirect_back fallback_location: root_path
+    else
+      flash[:danger] = "You can only like/dislike a game once"
+      redirect_back fallback_location: root_path
+    end
+  end
 
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
@@ -91,4 +103,11 @@ class GamesController < ApplicationController
     def game_params
       params.require(:game).permit(:steam_id, :name, :price, :release_date, :description, :image)
     end
+    def require_user_like
+      if !logged_in?
+        flash[:danger] = "You must be logged in to perform that action"
+        redirect_back fallback_location: root_path
+      end
+    end
+
 end
