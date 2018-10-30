@@ -5,7 +5,7 @@
 
 <%= image_tag(@game.image, alt: "game banner", class: "center-block game-banner") %>
 
-<p class="pull-left"><strong>Steam ID:</strong> <%= link_to @game.steam_id, "https://store.steampowered.com/app/#{@game.steam_id}", target: "_blank" %></p>
+<p class="pull-left"><strong>Steam ID:</strong> <%= link_to @game.steam_id, "https://sto`re`.steampowered.com/app/#{@game.steam_id}", target: "_blank" %></p>
 
 <p class="pull-right">
   <strong>Release date:</strong>
@@ -55,3 +55,49 @@
     <% end %> <%= @game.thumbs_down_total %>
   </div>
 </div>
+
+
+<% if @game.comments != 0 %>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h3>Prior Comments: </h3>
+        <div id="messages">
+          <%= render partial: 'comments/comments', object: @comments %>
+        </div>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h3>No Comments Yet!</h3>
+    </div>
+  </div>
+<% end %>
+
+<% if logged_in? %>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h3>Comments: </h3>
+      <hr />
+      <%= form_for([@game, @comment], :html => {class: "form-horizontal", 
+         role: "form"}) do |f| %>
+        <div class="form-group">
+          <div class="control-label col-md-2">
+            <%= f.label :description, "Comment" %>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_area :description, rows: 8, class: "form-control", 
+            placeholder: "Enter Comment Here" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-10">
+            <%= f.submit "Submit Comment", 
+            class: "btn btn-primary btn-lg btn-xlarge" %>
+          </div>
+        </div>
+      <% end %>
+      <hr />
+    </div>
+  </div>
+<% end %>

@@ -12,10 +12,8 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
-      def show
-    @comments = @game.comments.paginate(page: params[:page], 
-    per_page: 5)
-  end
+    @comment = Comment.new
+    @comments = @game.comments.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /games/new

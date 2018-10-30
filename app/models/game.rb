@@ -9,7 +9,7 @@ class Game < ApplicationRecord
   has_many :game_ratings
   has_many :gamers, through: :game_ratings
   
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :gamers, through: :comments
 
   has_and_belongs_to_many :genres

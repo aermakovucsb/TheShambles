@@ -15,7 +15,7 @@ class GamersController < ApplicationController
 		@gamer= Gamer.new(gamer_params)
 		if @gamer.save
 			session[:gamer_id] = @gamer.id
-			flash[:success] = "Welcome #{@gamer.gamername} to My Recipees App"
+			flash[:success] = "Welcome #{@gamer.gamername} to gTrack"
 			redirect_to gamer_path(@gamer)
 		else
 			render 'new'
