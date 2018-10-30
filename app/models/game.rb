@@ -1,6 +1,8 @@
 class Game < ApplicationRecord
 
   has_many :backgrounds
+  has_many :cards
+  has_many :emotes
 
   #has_many :comments, dependent: :destroy
 
