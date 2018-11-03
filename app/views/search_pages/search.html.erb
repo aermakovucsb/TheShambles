@@ -103,3 +103,37 @@
   </div>
 <% end %>
 </div>
+<div class="search-container">
+<h2>Search For Games by average emote price</h2>
+<%= form_tag do %>
+  <input type="hidden" name="search_type" value="game_by_avg_emote_price">
+  <div class="form-group">
+    <label for="minimumAvgEmote">Minimum average price emote</label>
+    <input type="text" class="form-control" id="minimumAvgEmote" name="minimum_avg_emote_price" value="0.03">
+  </div>
+  <div class="form-group">
+    <label for="maximumAvgEmote">Maximum average price emote</label>
+    <input type="text" class="form-control" id="maximumAvgEmote" name="maximum_avg_emote_price" value="1.00">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">Search</button>
+  </div>
+<% end %>
+</div>
+<div class="search-container">
+<h2>Search For Games by number of emotes</h2>
+<%= form_tag do %>
+  <input type="hidden" name="search_type" value="game_by_num_emote">
+  <div class="form-group">
+    <label for="minimumNumEmote">Minimum average price emote</label>
+    <input type="text" class="form-control" id="minimumNumEmote" name="minimum_num_emote" value="0">
+  </div>
+  <div class="form-group">
+    <label for="maximumNumEmote">Maximum average price emote</label>
+    <input type="text" class="form-control" id="maximumNumEmote" name="maximum_num_emote" value="10">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default">Search</button>
+  </div>
+<% end %>
+</div>
