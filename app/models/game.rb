@@ -4,8 +4,6 @@ class Game < ApplicationRecord
   has_many :cards
   has_many :emotes
 
-  #has_many :comments, dependent: :destroy
-
   has_and_belongs_to_many :companies
 
   has_many :game_ratings
