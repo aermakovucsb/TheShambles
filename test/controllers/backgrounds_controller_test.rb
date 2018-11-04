@@ -17,7 +17,7 @@ class BackgroundsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create background" do
     assert_difference('Background.count') do
-      post backgrounds_url, params: { background: { appid: @background.appid, name: @background.name, price: @background.price, url: @background.url } }
+      post backgrounds_url, params: { background: { game_id: @background.game_id, name: @background.name, price: @background.price, image: @background.image } }
     end
 
     assert_redirected_to background_url(Background.last)
@@ -34,7 +34,7 @@ class BackgroundsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update background" do
-    patch background_url(@background), params: { background: { appid: @background.appid, name: @background.name, price: @background.price, url: @background.url } }
+    patch background_url(@background), params: { background: { game_id: @background.game_id, name: @background.name, price: @background.price, image: @background.image } }
     assert_redirected_to background_url(@background)
   end
 
