@@ -19,6 +19,14 @@
   <%= @game.price %>
 </p>
 
+<p class="text-center">
+  <strong>Developed By</strong><br/><br/>
+  <% @game.companies.each do |company| %>
+    <span class="label label-primary label-company"><%= link_to company.name, company%></span>
+  <% end %>
+</p>
+
+<div class="clearfix clearfix-divider"></div>
 
 <p class="text-center game-description">
   <%= @game.description %>
@@ -26,17 +34,16 @@
 
 
 <p class="text-center">
+  <strong>Genre(s)</strong><br/><br/>
   <% @game.genres.each do |genre| %>
     <span class="badge badge-success badge-genre"><%= link_to genre.name, genre%></span>
   <% end %>
 </p>
 
-<p class="text-center">
-  <% @game.companies.each do |company| %>
-    <span class="badge badge-success badge-genre"><%= link_to company.name, company%></span>
-  <% end %>
-</p>
-
+<div class="wrapper">
+  <h1>Game Price</h1>
+  <canvas id="myChart" width="1600" height="500"></canvas>
+</div>
 
 <div class="clearfix clearfix-divider"></div>
 
@@ -101,3 +108,48 @@
     </div>
   </div>
 <% end %>
+
+<script>
+var time = [];
+var price = [];
+<% @game.price_histories.each do |price_history| %>
+  time.push('<%= price_history.time %>');
+  price.push(<%= price_history.price %>);
+<% end %>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: time,
+    datasets: [
+      { 
+        data: price,
+	label: 'price',
+	steppedLine: true,
+	borderColor: "#3e95cd",
+	fill: false
+      }
+    ]
+  },
+options: {
+    scales: {
+      xAxes: [{
+        type: 'time',
+	      time: {
+	      	displayFormats: {
+			'millisecond': 'MMM DD',
+           'second': 'MM-DD-YYYY',
+           'minute': 'MM-DD-YYYY',
+           'hour': 'MM-DD-YYYY',
+           'day': 'MM-DD-YYYY',
+           'week': 'MM-DD-YYYY',
+           'month': 'MM-DD-YYYY',
+           'quarter': 'MM-DD-YYYY',
+           'year': 'MM-DD-YYYY',
+		}
+	      }
+      }],
+    },
+  }
+});
+</script>
