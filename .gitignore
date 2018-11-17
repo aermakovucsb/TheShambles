@@ -36,3 +36,5 @@
 *.log
 *.blg
 *.bbl
+*.nav
+*.snm
