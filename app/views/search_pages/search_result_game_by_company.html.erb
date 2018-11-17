@@ -1,5 +1,5 @@
 <% provide(:title, 'Search Result') %>
-<h1>Search Result for <%= @search_title %></h1>
+<h1 class="text-center">Search Result for <%= @search_title %></h1>
 
 <table class="table table-striped table-bordered">
   <thead>
@@ -12,14 +12,13 @@
   </thead>
 
   <tbody>
-    <% @companies.each do |company| %>
+    <% @games.each do |game| %>
       <tr>        
-        <% @game = (company.games)[0] %>
-        <%  if not @game.blank? %>
-        <td><%= link_to @game.name, @game %></td>
-	<td><%= link_to @game.steam_id, "https://store.steampowered.com/app/#{@game.steam_id}", target: "_blank" %></td>
-        <td><%= @game.price %></td>
-	<td><%= @game.release_date %></td>
+        <%  if not game.blank? %>
+        <td><%= link_to game.name, game %></td>
+	<td><%= link_to game.steam_id, "https://store.steampowered.com/app/#{game.steam_id}", target: "_blank" %></td>
+        <td><%= game.price %></td>
+	<td><%= game.release_date %></td>
         <% end %>
       </tr>
     <% end %>
