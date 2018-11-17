@@ -33,10 +33,20 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.save
 	# start for mtm - many to many
-	params[:game][:genre_ids].each do |genre_id|
-	  unless genre_id.empty?
-	  genre = Genre.find(genre_id)
-	    @game.genres << genre
+	if params[:game][:genre_ids]
+	  params[:game][:genre_ids].each do |genre_id|
+	    unless genre_id.empty?
+	      genre = Genre.find(genre_id)
+	      @game.genres << genre
+	    end
+	  end
+	end
+	if params[:game][:company_ids]
+	  params[:game][:company_ids].each do |company_id|
+	    unless company_id.empty?
+	      company = Company.find(company_id)
+	      @game.companies << company
+	    end
 	  end
 	end
 	# end for mtm
@@ -71,6 +81,15 @@ class GamesController < ApplicationController
 	    unless genre_id.empty?
 	      genre = Genre.find(genre_id)
 	      @game.genres << genre
+	    end
+	  end
+	end
+	@game.companies.delete_all
+	if params[:game][:company_ids]
+	  params[:game][:company_ids].each do |company_id|
+	    unless company_id.empty?
+	      company = Company.find(company_id)
+	      @game.companies << company
 	    end
 	  end
 	end

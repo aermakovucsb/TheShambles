@@ -41,6 +41,13 @@
     <span><input type="checkbox" name="game[genre_ids][]" value="<%= genre.id %>" <% if game.genres.pluck(:name).include?(genre.name) %>checked<% end %>><%= genre.name %></span>&nbsp;&nbsp;&nbsp;&nbsp;
   <% end %>
 
+  <div class="clearfix"><br></div>
+
+  <%= form.label :companies %>
+  <% Company.all.each do |company| %>
+    <span><input type="checkbox" name="game[company_ids][]" value="<%= company.id %>" <% if game.companies.pluck(:name).include?(company.name) %>checked<% end %>><%= company.name %></span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <% end %>
+
   <div class="field">
     <%= form.label :image %>
     <%= form.text_field :image, id: :game_image %>
