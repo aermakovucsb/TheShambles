@@ -28,3 +28,11 @@
 .byebug_history
 # Ignoring the private key DONT TOUCH THIS LINE
 *.pem
+
+# Ignore tex outputs
+*.aux
+*.toc
+*.out
+*.log
+*.blg
+*.bbl
