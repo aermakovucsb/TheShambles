@@ -12,6 +12,8 @@ class Game < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :gamers, through: :comments
 
+  has_many :price_histories
+
   has_and_belongs_to_many :genres
   has_and_belongs_to_many :gamers
   has_many :likes, dependent: :destroy

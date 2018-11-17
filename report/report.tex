@@ -1,0 +1,50 @@
+\documentclass{report}
+
+%\usepackage{fixltx2e}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{
+	colorlinks,
+	%hidelinks, %to remove borders/colors
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+\begin{document}
+
+\begin{titlepage}
+	\begin{center}
+		\textsc{\normalsize{CS291A: Scalable Internet Services}}\\[0.5cm]
+		\line(1,0){450}\\[0.25in]
+		\huge{\bfseries gTrack: Track Prices of Games on Steam}\\[2mm]
+		\line(1,0){450}\\[1.5cm]
+		\textsc{\LARGE Nazmus Saquib}\\
+		\textsc{\LARGE Udit Paul}\\
+		\textsc{\LARGE Alex Ermakov}\\
+		\textsc{\LARGE Michael}\\[0.75cm]
+		\textsc{\large Graduate Students}\\[0.75cm]
+		\textsc{\large Department of Computer Science}\\
+		\textsc{\large University of California Santa Barbara}\\[0.75cm]
+		\textsc{\large\today}\\[2.0cm]
+		~\\[2.0cm]
+		\includegraphics[width=0.3\textwidth]{ucsb-logo.png}
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\include{abstract}
+\include{introduction}
+\include{webapp-description}
+\include{load-testing}
+\include{future-work}
+\include{conclusion}
+
+\bibliographystyle{unsrt}
+\bibliography{report}
+\end{document}

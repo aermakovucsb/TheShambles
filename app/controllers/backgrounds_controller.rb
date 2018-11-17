@@ -28,8 +28,8 @@ class BackgroundsController < ApplicationController
 
     respond_to do |format|
       if @background.save
-        game = Game.find(params[:background][:steam_id])
-        @background.games << game
+        game = Game.find(params[:background][:game_id])
+	game.backgrounds << @background
         format.html { redirect_to @background, notice: 'Background was successfully created.' }
         format.json { render :show, status: :created, location: @background }
       else
@@ -71,6 +71,6 @@ class BackgroundsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def background_params
-      params.require(:background).permit(:name, :price, :url, :appid)
+      params.require(:background).permit(:name, :price, :image, :game_id)
     end
 end

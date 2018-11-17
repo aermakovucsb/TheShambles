@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     	if gamer && gamer.authenticate(params[:session][:password])
       		session[:gamer_id] = gamer.id
           cookies.signed[:gamer_id] = gamer.id
-      		session[:user_type] = gamer.user_type
+      		#session[:user_type] = gamer.user_type
       		flash[:success] = "You have successfully logged in"
       		redirect_to gamer
     	else
