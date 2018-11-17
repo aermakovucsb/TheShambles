@@ -37,7 +37,9 @@
   </div>
 
   <%= form.label :genres %>
-  <%= collection_select(:game, :genre_ids, Genre.all, :id, :name, {}, { :multiple => true } )%>
+  <% Genre.all.each do |genre| %>
+    <span><input type="checkbox" name="game[genre_ids][]" value="<%= genre.id %>" <% if game.genres.pluck(:name).include?(genre.name) %>checked<% end %>><%= genre.name %></span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <% end %>
 
   <div class="field">
     <%= form.label :image %>
