@@ -13,7 +13,7 @@
       <th>Steam ID</th>
       <th>Price (USD)</th>
       <th>Release date</th>
-      <% if session[:gamer_id] and session[:user_type] == "admin" %>
+      <% if logged_in? && current_gamer.admin? %>
       <th colspan="2">Options</th>
       <% end %>
     </tr>
@@ -36,7 +36,7 @@
   </td>
         <td><%= game.price %></td>
   <td><%= game.release_date %></td>
-   <% if session[:gamer_id] and session[:user_type] == "admin" %>
+   <% if logged_in? && current_gamer.admin? %>
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>

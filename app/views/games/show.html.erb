@@ -58,8 +58,9 @@
 
 <div class="clearfix clearfix-divider"></div>
 
-<% if session[:gamer_id] and session[:user_type] == "admin" %>
+<% if logged_in? && current_gamer.admin? %>
 <%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Destroy', @game, method: :delete, data: {confirm: 'Are you sure?'} %> |
 <% end %>
 <%= link_to 'Back', games_path %>
 
