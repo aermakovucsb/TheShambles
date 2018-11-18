@@ -33,11 +33,22 @@
 </p>
 
 
-<p class="text-center">
+<p class="text-center clearfix-divider">
   <strong>Genre(s)</strong><br/><br/>
   <% @game.genres.each do |genre| %>
     <span class="badge badge-success badge-genre"><%= link_to genre.name, genre%></span>
   <% end %>
+</p>
+
+<p class="text-center">
+<strong>System Requirements</strong>
+<% if @game.system_requirement %>
+<table class="table table-bordered">
+  <tr><td><strong>Processor</strong></td><td><% if @game.system_requirement.processor %><%= @game.system_requirement.processor.name %><% end %></td></tr>
+  <tr><td><strong>Memory</strong></td><td><% if @game.system_requirement.memory %><%= @game.system_requirement.memory.name %><% end %></td></tr>
+  <tr><td><strong>Graphics Card</strong></td><td><% if @game.system_requirement.graphic %><%= @game.system_requirement.graphic.name %><% end %></td></tr>
+</table>
+<% end %>
 </p>
 
 <div class="wrapper">

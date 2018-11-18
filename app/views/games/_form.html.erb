@@ -48,6 +48,84 @@
     <span><input type="checkbox" name="game[company_ids][]" value="<%= company.id %>" <% if game.companies.pluck(:name).include?(company.name) %>checked<% end %>><%= company.name %></span>&nbsp;&nbsp;&nbsp;&nbsp;
   <% end %>
 
+
+  <div class="clearfix"><br></div>
+
+  <%= form.label :system_requirements %>
+  <% if game.system_requirement %>
+  <table>
+    <tr>
+      <td>Processor</td>
+      <td>
+	<select name="game[processor_id]">
+	  <option value="0">--</option>
+	  <% Processor.all.each do |processor| %>
+	    <option value="<%= processor.id %>" <% if game.system_requirement.processor.name == processor.name %>selected<% end %>><%= processor.name %></option>
+	<% end %>
+	</select>
+      </td>
+    </tr>
+    <tr>
+      <td>Memory</td>
+      <td>
+	<select name="game[memory_id]">
+	  <option value="0">--</option>
+	  <% Memory.all.each do |memory| %>
+	    <option value="<%= memory.id %>" <% if game.system_requirement.memory.name == memory.name %>selected<% end %>><%= memory.name %></option>
+	<% end %>
+	</select>
+      </td>
+    </tr>
+    <tr>
+      <td>Graphics Card</td>
+      <td>
+	<select name="game[graphic_id]">
+	  <option value="0">--</option>
+	  <% Graphic.all.each do |graphic| %>
+	    <option value="<%= graphic.id %>" <% if game.system_requirement.graphic.name == graphic.name %>selected<% end %>><%= graphic.name %></option>
+	<% end %>
+	</select>
+      </td>
+    </tr>
+  </table>
+  <% else %>
+  <table>
+    <tr>
+      <td>Processor</td>
+      <td>
+	<select name="game[processor_id]">
+	  <option value="0">--</option>
+	  <% Processor.all.each do |processor| %>
+	    <option value="<%= processor.id %>"><%= processor.name %></option>
+	<% end %>
+	</select>
+      </td>
+    </tr>
+    <tr>
+      <td>Memory</td>
+      <td>
+	<select name="game[memory_id]">
+	  <option value="0">--</option>
+	  <% Memory.all.each do |memory| %>
+	    <option value="<%= memory.id %>"><%= memory.name %></option>
+	<% end %>
+	</select>
+      </td>
+    </tr>
+    <tr>
+      <td>Graphics Card</td>
+      <td>
+	<select name="game[graphic_id]">
+	  <option value="0">--</option>
+	  <% Graphic.all.each do |graphic| %>
+	    <option value="<%= graphic.id %>"><%= graphic.name %></option>
+	<% end %>
+	</select>
+      </td>
+    </tr>
+  </table>
+  <% end %>
+
   <div class="field">
     <%= form.label :image %>
     <%= form.text_field :image, id: :game_image %>

@@ -50,6 +50,15 @@ class GamesController < ApplicationController
 	  end
 	end
 	# end for mtm
+	processor_id = params[:game][:processor_id]
+	memory_id = params[:game][:memory_id]
+	graphic_id = params[:game][:graphic_id]
+	if (processor_id != 0) and (memory_id != 0) and (graphic_id != 0)
+	  @game.system_requirement = SystemRequirement.new({processor_id: processor_id, memory_id: memory_id, graphic_id: graphic_id})
+	else
+	  @game.system_requirement = SystemRequirement.new({processor_id: 1, memory_id: 1, graphic_id: 1})
+	end
+	@game.system_requirement.save()
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
         format.json { render :show, status: :created, location: @game }
       else
@@ -94,6 +103,20 @@ class GamesController < ApplicationController
 	  end
 	end
 	# end for mtm
+	processor_id = params[:game][:processor_id]
+	memory_id = params[:game][:memory_id]
+	graphic_id = params[:game][:graphic_id]
+	sys_req = @game.system_requirement
+	if processor_id != 0
+	  sys_req.processor_id = processor_id
+	end
+	if memory_id != 0
+	  sys_req.memory_id = memory_id
+	end
+	if graphic_id != 0
+	  sys_req.graphic_id = graphic_id
+	end
+	sys_req.save
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
