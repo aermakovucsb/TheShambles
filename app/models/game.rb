@@ -1,5 +1,7 @@
 class Game < ApplicationRecord
 
+  has_one :system_requirement
+
   has_many :backgrounds
   has_many :cards
   has_many :emotes

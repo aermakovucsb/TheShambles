@@ -32,14 +32,33 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-	# start for mtm
-	params[:game][:genre_ids].each do |genre_id|
-	  unless genre_id.empty?
-	  genre = Genre.find(genre_id)
-	    @game.genres << genre
+	# start for mtm - many to many
+	if params[:game][:genre_ids]
+	  params[:game][:genre_ids].each do |genre_id|
+	    unless genre_id.empty?
+	      genre = Genre.find(genre_id)
+	      @game.genres << genre
+	    end
+	  end
+	end
+	if params[:game][:company_ids]
+	  params[:game][:company_ids].each do |company_id|
+	    unless company_id.empty?
+	      company = Company.find(company_id)
+	      @game.companies << company
+	    end
 	  end
 	end
 	# end for mtm
+	processor_id = params[:game][:processor_id]
+	memory_id = params[:game][:memory_id]
+	graphic_id = params[:game][:graphic_id]
+	if (processor_id != 0) and (memory_id != 0) and (graphic_id != 0)
+	  @game.system_requirement = SystemRequirement.new({processor_id: processor_id, memory_id: memory_id, graphic_id: graphic_id})
+	else
+	  @game.system_requirement = SystemRequirement.new({processor_id: 1, memory_id: 1, graphic_id: 1})
+	end
+	@game.system_requirement.save()
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
         format.json { render :show, status: :created, location: @game }
       else
@@ -65,13 +84,39 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.update(game_params)
 	# start for mtm
-	params[:game][:genre_ids].each do |genre_id|
-	  unless genre_id.empty?
-	  genre = Genre.find(genre_id)
-	    @game.genres << genre
+	@game.genres.delete_all
+	if params[:game][:genre_ids]
+	  params[:game][:genre_ids].each do |genre_id|
+	    unless genre_id.empty?
+	      genre = Genre.find(genre_id)
+	      @game.genres << genre
+	    end
+	  end
+	end
+	@game.companies.delete_all
+	if params[:game][:company_ids]
+	  params[:game][:company_ids].each do |company_id|
+	    unless company_id.empty?
+	      company = Company.find(company_id)
+	      @game.companies << company
+	    end
 	  end
 	end
 	# end for mtm
+	processor_id = params[:game][:processor_id]
+	memory_id = params[:game][:memory_id]
+	graphic_id = params[:game][:graphic_id]
+	sys_req = @game.system_requirement
+	if processor_id != 0
+	  sys_req.processor_id = processor_id
+	end
+	if memory_id != 0
+	  sys_req.memory_id = memory_id
+	end
+	if graphic_id != 0
+	  sys_req.graphic_id = graphic_id
+	end
+	sys_req.save
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
