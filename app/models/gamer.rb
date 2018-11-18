@@ -10,7 +10,6 @@ class Gamer < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-  has_many :game_ratings
   has_many :games, through: :game_ratings
 
   has_many :comments

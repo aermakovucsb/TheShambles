@@ -130,15 +130,15 @@ def generateSeedFile(filename='seeds.rb'):
             fh.write("\t{{steam_id: {0}, name: '{1}', price: {2}, release_date: '{3}', description: '{4}', image: '{5}', genre_ids: {6}, company_ids: {7}, gamer_ids: {8}}},\n".format(game['steam_id'], game['name'].replace("'", "\\'").encode('utf-8'), game['price'], game['release_date'], game['description'].encode('utf-8'), game['image'], genre_ids, company_ids, gamer_ids))
         fh.write('])\n\n')
 
-        #game ratings
-        for x in range(len(Games)):
-            fh.write("games[{0}].game_ratings ".format(x))
-            user_ids = range(1, gamerCount + 1)
-            random.shuffle(user_ids)
-            for y in user_ids[0:random.randint(1, gamerCount)]:
-                fh.write("<< GameRating.new(gamer: gamers[{0}], rating: {1}) ".format(y, random.randint(1, 6)))
-            fh.write('\n')
-        fh.write('\n\n')
+#        #game ratings
+#        for x in range(len(Games)):
+#            fh.write("games[{0}].game_ratings ".format(x))
+#            user_ids = range(1, gamerCount + 1)
+#            random.shuffle(user_ids)
+#            for y in user_ids[0:random.randint(1, gamerCount)]:
+#                fh.write("<< GameRating.new(gamer: gamers[{0}], rating: {1}) ".format(y, random.randint(1, 6)))
+#            fh.write('\n')
+#        fh.write('\n\n')
 
         #game comments
         for x in range(len(Games)):

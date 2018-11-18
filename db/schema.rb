@@ -62,14 +62,6 @@ ActiveRecord::Schema.define(version: 20181030005605) do
     t.index ["game_id"], name: "index_emotes_on_game_id"
   end
 
-  create_table "game_ratings", id: false, force: :cascade do |t|
-    t.integer "game_id", null: false
-    t.integer "rating"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "gamer_id"
-  end
-
   create_table "gamers", force: :cascade do |t|
     t.string "gamername"
     t.string "email"

@@ -1,12 +1,11 @@
 class Game < ApplicationRecord
 
-  has_many :backgrounds
-  has_many :cards
-  has_many :emotes
+  has_many :backgrounds, dependent: :destroy
+  has_many :cards, dependent: :destroy
+  has_many :emotes, dependent: :destroy
 
   has_and_belongs_to_many :companies
 
-  has_many :game_ratings
   has_many :gamers, through: :game_ratings
   
   has_many :comments, dependent: :destroy
