@@ -66,7 +66,7 @@ INNER JOIN system_requirements
 ON games.id = system_requirements.game_id
 INNER JOIN processors
 ON system_requirements.processor_id = processors.id
-WHERE processors.rank <= #{processor_rank}
+WHERE processors.rank >= #{processor_rank}
 INTERSECT
 SELECT games.id, games.name, games.steam_id, games.price, games.release_date
 FROM games
@@ -74,7 +74,7 @@ INNER JOIN system_requirements
 ON games.id = system_requirements.game_id
 INNER JOIN memories
 ON system_requirements.memory_id = memories.id
-WHERE memories.rank <= #{memory_rank}
+WHERE memories.rank >= #{memory_rank}
 INTERSECT
 SELECT games.id, games.name, games.steam_id, games.price, games.release_date
 FROM games
@@ -82,7 +82,7 @@ INNER JOIN system_requirements
 ON games.id = system_requirements.game_id
 INNER JOIN graphics
 ON system_requirements.graphic_id = graphics.id
-WHERE graphics.rank <= #{graphic_rank}
+WHERE graphics.rank >= #{graphic_rank}
       """
       @games = ActiveRecord::Base.connection.execute(sql)
       @search_title = "Games You can Run"
