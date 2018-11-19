@@ -27,13 +27,13 @@
   </div>
 
   <div class="field">
-    <%= form.label :steam_id %>
-    <%= form.number_field :steam_id, id: :card_steam_id %>
+    <%= form.label :game_id %>
+    <%= form.number_field :game_id, id: :card_steam_id %>
   </div>
 
   <div class="field">
-    <%= form.label :foil %>
-    <%= form.text_field :foil, id: :card_foil %>
+    <input type="hidden" name="card[foil]" value="false">
+    <label><input type="checkbox" name="card[foil]" value="true"> foil</label>
   </div>
 
   <div class="actions">

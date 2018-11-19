@@ -1,24 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @background.name %>
-</p>
+<h1 class="text-center">background <span class="game-header"><%= @background.name %></span> for <span class="game-header"><%= @background.game.name %></span></h1>
 
-<p>
+<p class="text-center">
   <strong>Price:</strong>
   <%= @background.price %>
 </p>
 
-<p>
-  <strong>Image:</strong>
-  <%= @background.image %>
+<p class="text-center">
+  <img style="max-width: 500px" src="<%= @background.image %>">
 </p>
 
-<p>
-  <strong>Game ID:</strong>
-  <%= @background.game_id %>
+<p class="text-center">
+  <a href="/games/<%= @background.game_id %>"">[visit <%= @background.game.name %> page]</a>
 </p>
 
+<% if logged_in? && current_gamer.admin? %>
 <%= link_to 'Edit', edit_background_path(@background) %> |
 <%= link_to 'Back', backgrounds_path %>
+<% end %>

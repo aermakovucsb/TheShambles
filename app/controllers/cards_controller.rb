@@ -1,5 +1,6 @@
 class CardsController < ApplicationController
   before_action :set_card, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, only: [:create, :new, :edit, :update, :destroy]
 
   # GET /cards
   # GET /cards.json
@@ -28,8 +29,8 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.save
-        game = Game.find(params[:card][:steam_id])
-        @background.games << game
+        game = Game.find(params[:card][:game_id])
+	game.cards << @card
         format.html { redirect_to @card, notice: 'Card was successfully created.' }
         format.json { render :show, status: :created, location: @card }
       else
@@ -71,6 +72,6 @@ class CardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def card_params
-      params.require(:card).permit(:name, :price, :image, :steam_id, :foil)
+      params.require(:card).permit(:name, :price, :image, :game_id, :foil)
     end
 end

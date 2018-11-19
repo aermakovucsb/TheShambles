@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy, :like]
   before_action :require_user, except: [:index, :show, :like]
+  before_action :require_admin, only: [:create, :new, :edit, :update, :destroy]
   before_action :require_user_like, only: [:like]
 
   # GET /games
