@@ -51,13 +51,45 @@ class SearchPagesController < ApplicationController
         render "search_result_game_by_price_range"
     elsif params[:search_type] == "game_by_num_emote"
       params[:minimum_num_emote] = params[:minimum_num_emote].empty? ? 0.03 : params[:minimum_num_emote]
-        params[:maximum_num_emote] = params[:maximum_num_emote].empty? ? 1.00 : params[:maximum_num_emote]
-	@games = Game.select("games.*").joins(:emotes).group("games.id").having("count(emotes.game_id) >= :min AND count(emotes.game_id) <= :max", {min: params[:minimum_num_emote].to_i, max: params[:maximum_num_emote].to_i})
-        @search_title = "Games between #{params[:minimum_num_emote]} and #{params[:maximum_num_emote]} number of emotes"
-        render "search_result_game_by_price_range"
-      end
+      params[:maximum_num_emote] = params[:maximum_num_emote].empty? ? 1.00 : params[:maximum_num_emote]
+      @games = Game.select("games.*").joins(:emotes).group("games.id").having("count(emotes.game_id) >= :min AND count(emotes.game_id) <= :max", {min: params[:minimum_num_emote].to_i, max: params[:maximum_num_emote].to_i})
+      @search_title = "Games between #{params[:minimum_num_emote]} and #{params[:maximum_num_emote]} number of emotes"
+      render "search_result_game_by_price_range"
+    elsif params[:search_type] == "sys_req"
+      processor_rank = Processor.select('rank').find(params[:processor]).rank
+      memory_rank = Memory.select('rank').find(params[:memory]).rank
+      graphic_rank = Graphic.select('rank').find(params[:graphic]).rank
+      sql = """
+SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+FROM games
+INNER JOIN system_requirements
+ON games.id = system_requirements.game_id
+INNER JOIN processors
+ON system_requirements.processor_id = processors.id
+WHERE processors.rank <= #{processor_rank}
+INTERSECT
+SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+FROM games
+INNER JOIN system_requirements
+ON games.id = system_requirements.game_id
+INNER JOIN memories
+ON system_requirements.memory_id = memories.id
+WHERE memories.rank <= #{memory_rank}
+INTERSECT
+SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+FROM games
+INNER JOIN system_requirements
+ON games.id = system_requirements.game_id
+INNER JOIN graphics
+ON system_requirements.graphic_id = graphics.id
+WHERE graphics.rank <= #{graphic_rank}
+      """
+      @games = ActiveRecord::Base.connection.execute(sql)
+      @search_title = "Games You can Run"
+      render "search_result_sys_req"
     else
       #pass
+    end
     end
   end
 end
