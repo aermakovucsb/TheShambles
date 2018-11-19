@@ -33,31 +33,63 @@ class SearchPagesController < ApplicationController
         params[:minimum_number_of_cards] = params[:minimum_number_of_cards].empty? ? 0 : params[:minimum_number_of_cards]
         params[:maximum_number_of_cards] = params[:maximum_number_of_cards].empty? ? 15 : params[:maximum_number_of_cards]
         params[:foil] = params[:foil] ? true : false
-        @games = Game.select("games.*").joins(:cards).where("cards.foil = :foil", foil: params[:foil]).group("cards.game_id").having("count(cards.game_id) >= :min AND count(cards.game_id) <= :max", {min: params[:minimum_number_of_cards].to_i, max: params[:maximum_number_of_cards].to_i})
+	@games = Game.joins(:cards).where("cards.foil = :foil", foil: params[:foil]).group('games.id').having("count(games.id) >= #{params[:minimum_number_of_cards]} and count(games.id) <= #{params[:maximum_number_of_cards]}")
         @search_title = "Games between #{params[:minimum_number_of_cards]} and #{params[:maximum_number_of_cards]} number of cards"
         render "search_result_game_by_price_range"
       elsif params[:search_type] == "game_by_avg_card_price"
         params[:minimum_avg_cards_price] = params[:minimum_avg_cards_price].empty? ? 0.03 : params[:minimum_avg_cards_price]
         params[:maximum_avg_cards_price] = params[:maximum_avg_cards_price].empty? ? 1.00 : params[:maximum_avg_cards_price]
         params[:foil] = params[:foil] ? true : false
-        @games = Game.select("games.*").joins(:cards).where("cards.foil = :foil", foil: params[:foil]).group("cards.game_id").having("avg(cards.price) >= :min AND avg(cards.price) <= :max", {min: params[:minimum_avg_cards_price].to_f, max: params[:maximum_avg_cards_price].to_f})
+	@games = Game.select("games.*").joins(:cards).where("cards.foil = :foil", foil: params[:foil]).group("games.id").having("avg(cards.price) >= :min AND avg(cards.price) <= :max", {min: params[:minimum_avg_cards_price].to_f, max: params[:maximum_avg_cards_price].to_f})
         @search_title = "Games between #{params[:minimum_avg_cards_price]} and #{params[:maximum_avg_cards_price]} in average card price"
         render "search_result_game_by_price_range"
     elsif params[:search_type] == "game_by_avg_emote_price"
     	params[:minimum_avg_emote_price] = params[:minimum_avg_emote_price].empty? ? 0.03 : params[:minimum_avg_emote_price]
         params[:maximum_avg_emote_price] = params[:maximum_avg_emote_price].empty? ? 1.00 : params[:maximum_avg_emote_price]
-        @games = Game.select("games.*").joins(:emotes).group("emotes.game_id").having("avg(emotes.price) >= :min AND avg(emotes.price) <= :max", {min: params[:minimum_avg_emote_price].to_f, max: params[:maximum_avg_emote_price].to_f})
+	@games = Game.select("games.*").joins(:emotes).group("games.id").having("avg(emotes.price) >= :min AND avg(emotes.price) <= :max", {min: params[:minimum_avg_emote_price].to_f, max: params[:maximum_avg_emote_price].to_f})
         @search_title = "Games between #{params[:minimum_avg_emote_price]} and #{params[:maximum_avg_emote_price]} in average emote price"
         render "search_result_game_by_price_range"
     elsif params[:search_type] == "game_by_num_emote"
       params[:minimum_num_emote] = params[:minimum_num_emote].empty? ? 0.03 : params[:minimum_num_emote]
-        params[:maximum_num_emote] = params[:maximum_num_emote].empty? ? 1.00 : params[:maximum_num_emote]
-        @games = Game.select("games.*").joins(:emotes).group("emotes.game_id").having("count(emotes.game_id) >= :min AND count(emotes.game_id) <= :max", {min: params[:minimum_num_emote].to_i, max: params[:maximum_num_emote].to_i})
-        @search_title = "Games between #{params[:minimum_num_emote]} and #{params[:maximum_num_emote]} number of emotes"
-        render "search_result_game_by_price_range"
-      end
+      params[:maximum_num_emote] = params[:maximum_num_emote].empty? ? 1.00 : params[:maximum_num_emote]
+      @games = Game.select("games.*").joins(:emotes).group("games.id").having("count(emotes.game_id) >= :min AND count(emotes.game_id) <= :max", {min: params[:minimum_num_emote].to_i, max: params[:maximum_num_emote].to_i})
+      @search_title = "Games between #{params[:minimum_num_emote]} and #{params[:maximum_num_emote]} number of emotes"
+      render "search_result_game_by_price_range"
+    elsif params[:search_type] == "sys_req"
+      processor_rank = Processor.select('rank').find(params[:processor]).rank
+      memory_rank = Memory.select('rank').find(params[:memory]).rank
+      graphic_rank = Graphic.select('rank').find(params[:graphic]).rank
+      sql = """
+SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+FROM games
+INNER JOIN system_requirements
+ON games.id = system_requirements.game_id
+INNER JOIN processors
+ON system_requirements.processor_id = processors.id
+WHERE processors.rank >= #{processor_rank}
+INTERSECT
+SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+FROM games
+INNER JOIN system_requirements
+ON games.id = system_requirements.game_id
+INNER JOIN memories
+ON system_requirements.memory_id = memories.id
+WHERE memories.rank >= #{memory_rank}
+INTERSECT
+SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+FROM games
+INNER JOIN system_requirements
+ON games.id = system_requirements.game_id
+INNER JOIN graphics
+ON system_requirements.graphic_id = graphics.id
+WHERE graphics.rank >= #{graphic_rank}
+      """
+      @games = ActiveRecord::Base.connection.execute(sql)
+      @search_title = "Games You can Run"
+      render "search_result_sys_req"
     else
       #pass
+    end
     end
   end
 end

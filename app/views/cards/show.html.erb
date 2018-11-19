@@ -1,29 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @card.name %>
-</p>
+<h1 class="text-center">card <span class="game-header"><%= @card.name %></span> for <span class="game-header"><%= @card.game.name %></span></h1>
 
-<p>
+<p class="text-center">
   <strong>Price:</strong>
   <%= @card.price %>
 </p>
 
-<p>
-  <strong>Image:</strong>
-  <%= @card.image %>
+<p class="text-center">
+  <img src="<%= @card.image %>" style="max-width: 500px">
 </p>
 
-<p>
-  <strong>Steam:</strong>
-  <%= @card.steam_id %>
+
+<p class="text-center">
+<% if @card.foil == true %><span class="badge badge-primary">FOIL CARD</span><% end %>
 </p>
 
-<p>
-  <strong>Foil:</strong>
-  <%= @card.foil %>
+<p class="text-center">
+  <a href="/games/<%= @card.game_id %>"">[visit <%= @card.game.name %> page]</a>
 </p>
 
+<% if logged_in? && current_gamer.admin? %>
 <%= link_to 'Edit', edit_card_path(@card) %> |
 <%= link_to 'Back', cards_path %>
+<% end %>

@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Emotes</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Image</th>
+      <% if logged_in? && current_gamer.admin? %>
+      <th colspan="2">Options</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @emotes.each do |emote| %>
+      <tr>
+        <td><%= link_to emote.name, emote %></td>
+        <td><%= emote.price %></td>
+	<td><img style="max-width: 200px" src="<%= emote.image %>"></td>
+	<% if logged_in? && current_gamer.admin? %>
+        <td><%= link_to 'Edit', edit_emote_path(emote) %></td>
+        <td><%= link_to 'Destroy', emote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if logged_in? && current_gamer.admin? %>
+<%= link_to 'New Emote', new_emote_path %>
+<% end %>

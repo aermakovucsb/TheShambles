@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">emote <span class="game-header"><%= @emote.name %></span> for <span class="game-header"><%= @emote.game.name %></span></h1>
+
+<p class="text-center">
+  <strong>Price:</strong>
+  <%= @emote.price %>
+</p>
+
+<p class="text-center">
+  <img style="max-width: 500px" src="<%= @emote.image %>">
+</p>
+
+<p class="text-center">
+  <a href="/games/<%= @emote.game_id %>"">[visit <%= @emote.game.name %> page]</a>
+</p>
+
+<% if logged_in? && current_gamer.admin? %>
+<%= link_to 'Edit', edit_emote_path(@emote) %> |
+<%= link_to 'Back', emotes_path %>
+<% end %>
