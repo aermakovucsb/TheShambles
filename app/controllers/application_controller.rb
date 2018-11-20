@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
+  skip_before_action :verify_authenticity_token, raise: false
   rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
   helper_method :current_gamer, :logged_in?, :require_admin
 

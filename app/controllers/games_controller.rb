@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  skip_before_action :verify_authenticity_token, raise: false
   before_action :set_game, only: [:show, :edit, :update, :destroy, :like]
   before_action :require_user, except: [:index, :show, :like]
   before_action :require_admin, only: [:create, :new, :edit, :update, :destroy]

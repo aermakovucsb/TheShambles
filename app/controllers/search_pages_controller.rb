@@ -1,4 +1,5 @@
 class SearchPagesController < ApplicationController
+  skip_before_action :verify_authenticity_token, raise: false
   def search
     if request.post?
       if params[:search_type] == "game_by_name"
