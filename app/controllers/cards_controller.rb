@@ -1,4 +1,5 @@
 class CardsController < ApplicationController
+  skip_before_action :verify_authenticity_token, raise: false
   before_action :set_card, only: [:show, :edit, :update, :destroy]
   before_action :require_admin, only: [:create, :new, :edit, :update, :destroy]
 
