@@ -51,8 +51,42 @@
 <% end %>
 </p>
 
+<h2 class="text-center">Backgrounds</h2>
+<% @game.backgrounds.each do |background| %>
+<div class="col-md-4">
+<p><img src="https://steamcommunity-a.akamaihd.net/economy/image/<%= background.image %>" class="img-responsive"></p>
+<div class="text-center"><p class="label label-success price-label">$<%= background.price %></p></div>
+<p class="text-center"><strong><%= background.name %></strong></p>
+</div>
+<% end %>
+
+<div class="clearfix"></div>
+
+<h2 class="text-center">Cards</h2>
+<% @game.cards.each do |card| %>
+<div class="col-md-4">
+<p><img src="https://steamcommunity-a.akamaihd.net/economy/image/<%= card.image %>" class="img-responsive"></p>
+<div class="text-center"><p class="label label-success price-label">$<%= card.price %></p></div>
+<p class="text-center"><strong><%= card.name %></strong></p>
+</div>
+<% end %>
+
+<div class="clearfix"></div>
+
+<h2 class="text-center">Emotes</h2>
+<% @game.emotes.each do |emote| %>
+<div class="col-md-4">
+<p><img src="https://steamcommunity-a.akamaihd.net/economy/image/<%= emote.image %>" class="img-responsive"></p>
+<div class="text-center"><p class="label label-success price-label">$<%= emote.price %></p></div>
+<p class="text-center"><strong><%= emote.name %></strong></p>
+</div>
+<% end %>
+
+<div class="clearfix"></div>
+
+
 <div class="wrapper">
-  <h1>Game Price</h1>
+  <h2 class="text-center">Game Price</h2>
   <canvas id="myChart" width="1600" height="500"></canvas>
 </div>
 
