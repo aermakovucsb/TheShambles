@@ -25,10 +25,10 @@
         <div class="pull-right liking">
           <%= link_to like_game_path(game, like: true), method: :post do %>
             <i class="glyphicon glyphicon-thumbs-up"></i> 
-          <% end %> <%= game.thumbs_up_total %> || 
+    <% end %> <%#= game.thumbs_up_total %><%= game.likes.where(like: 't').size %> || 
           <%= link_to like_game_path(game, like: false), method: :post do %>
             <i class="glyphicon glyphicon-thumbs-down"></i>
-          <% end %> <%= game.thumbs_down_total %>
+          <% end %> <%#= game.thumbs_down_total %><%= game.likes.where(like: 'f').size %>
           </div>
         </td>
   <td><%= link_to game.steam_id, "https://store.steampowered.com/app/#{game.steam_id}", target: "_blank" %>

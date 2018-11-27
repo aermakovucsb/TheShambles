@@ -1,16 +1,8 @@
 \begin{frame}
 \frametitle{Entity Relationship Diagram}
 
-\begin{tikzpicture}[node distance=7em]
-
-\node[entity] (game) {Game};
-
-\node[relationship] (likes) [right of=game] {likes} edge (game);
-\node (gamelikes) [left of=likes, xshift=5em, yshift=0.5em] {N};
-\node (likesgamer) [left of=likes, xshift=9em, yshift=0.5em] {N};
-
-\node[entity] (gamer) [right of=likes] {Gamer} edge (likes);
-
-\end{tikzpicture}
+\begin{figure}
+	\includegraphics[scale=0.7]{erd.pdf}
+\end{figure}
 
 \end{frame}
