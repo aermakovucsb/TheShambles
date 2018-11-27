@@ -20,6 +20,7 @@
   </thead>
 
   <tbody>
+	  <% cache(@users) do %>
     <% @games.each do |game| %>
       <tr>
         <td><%= link_to game.name, game %>
@@ -39,6 +40,7 @@
    <% if logged_in? && current_gamer.admin? %>
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
       <% end %>
       </tr>
   <% end %>

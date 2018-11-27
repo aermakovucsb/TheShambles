@@ -1,8 +1,10 @@
 <div align="center">
   <%= will_paginate comments %>
 </div>
+<% cache(@comments) do %>
 <% comments.each do |comment| %>
   <%= render(partial: 'comments/comment', object: comment) %>
+<% end %>
 <% end %>
 <div align="center">
   <%= will_paginate comments %>
