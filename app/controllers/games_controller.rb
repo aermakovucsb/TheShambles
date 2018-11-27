@@ -8,16 +8,16 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    #@games = Game.all.paginate(page: params[:page], per_page: 100)
-    @games = Game.all
+    @games = Game.all.paginate(page: params[:page], per_page: 100)
+    #@games = Game.all
   end
 
   # GET /games/1
   # GET /games/1.json
   def show
     @comment = Comment.new
-    #@comments = @game.comments.paginate(page: params[:page], per_page: 5)
-    @comments = @game.comments
+    @comments = @game.comments.paginate(page: params[:page], per_page: 5)
+    #@comments = @game.comments
   end
 
   # GET /games/new
