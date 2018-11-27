@@ -98,6 +98,7 @@
 <% end %>
 <%= link_to 'Back', games_path %>
 
+<% if logged_in? %>
 <div class="row">
   <div class="row col-md-8 col-md-offset-2">
     <%= link_to like_game_path(@game, like: true), method: :post do %>
@@ -108,6 +109,7 @@
     <% end %> <%= @game.thumbs_down_total %>
   </div>
 </div>
+<% end %>
 
 
 <% if @game.comments != 0 %>
