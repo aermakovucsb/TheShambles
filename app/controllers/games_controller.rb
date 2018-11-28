@@ -15,6 +15,7 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    fresh_when last_modified: @game.updated_at
     @comment = Comment.new
     @comments = @game.comments.paginate(page: params[:page], per_page: 5)
     #@comments = @game.comments
