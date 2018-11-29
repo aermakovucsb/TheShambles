@@ -1,9 +1,17 @@
 class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token, raise: false
   before_action :set_game, only: [:show, :edit, :update, :destroy, :like]
-  before_action :require_user, except: [:index, :show, :like]
+  before_action :require_user, except: [:index, :show, :like, :stats]
   before_action :require_admin, only: [:create, :new, :edit, :update, :destroy]
   before_action :require_user_like, only: [:like]
+
+  # GET /games/stats
+  def stats
+    game = Game.find(params[:id])
+    likes = game.likes.where(like: true).count
+    dislikes = game.likes.where(like: false).count
+    render html: "likes:#{likes} | dislikes:#{dislikes}"
+  end
 
   # GET /games
   # GET /games.json

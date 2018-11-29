@@ -27,10 +27,11 @@
         <div class="pull-right liking">
           <%= link_to like_game_path(game, like: true), method: :post do %>
             <i class="glyphicon glyphicon-thumbs-up"></i> 
-          <% end %> <%= game.thumbs_up_total %> || 
+          <% end %> <%#= game.thumbs_up_total %> || 
           <%= link_to like_game_path(game, like: false), method: :post do %>
             <i class="glyphicon glyphicon-thumbs-down"></i>
-          <% end %> <%= game.thumbs_down_total %>
+          <% end %> <%#= game.thumbs_down_total %>
+	  <span id="game_<%= game.id%>">[stat]</span>
           </div>
         </td>
   <td><%= link_to game.steam_id, "https://store.steampowered.com/app/#{game.steam_id}", target: "_blank" %>
@@ -56,3 +57,19 @@
 <%= link_to 'New Game', new_game_path %>
 <% end %>
 
+<script>
+$('span[id ^= "game_"]').hover(function(e){
+    var gameID = e.target.id.substring(5);
+    var space = $(this);
+    $.ajax({
+	'type': 'GET',
+	'url': '/games/stats/' + gameID,
+	'dataType': 'html',
+	'success': function(data){
+	    space.html(data);
+	}
+    });
+}, function(){
+    $(this).html('[stat]');
+});
+</script>

@@ -4,7 +4,7 @@ class SearchPagesController < ApplicationController
     if request.post?
       if params[:search_type] == "game_by_name"
 	if not params[:name].empty?
-	  @games = Game.where("name LIKE ?", "%#{params[:name]}%")
+	  @games = Game.where("lower(name) LIKE ?", "%#{params[:name].downcase}%")
 	  @search_title = "Games Containing '#{params[:name]}'"
 	  render "search_result_game_by_name"
 	else
@@ -85,6 +85,32 @@ INNER JOIN graphics
 ON system_requirements.graphic_id = graphics.id
 WHERE graphics.rank >= #{graphic_rank}
       """
+      
+#      sql = """
+#SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+#FROM games
+#INNER JOIN system_requirements
+#ON games.id = system_requirements.game_id
+#INNER JOIN processors
+#ON system_requirements.processor_id = processors.id
+#WHERE processors.rank >= (SELECT rank FROM processors WHERE id = #{params[:processor]})
+#INTERSECT
+#SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+#FROM games
+#INNER JOIN system_requirements
+#ON games.id = system_requirements.game_id
+#INNER JOIN memories
+#ON system_requirements.memory_id = memories.id
+#WHERE memories.rank >= (SELECT rank FROM processors WHERE id = #{params[:memory]})
+#INTERSECT
+#SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+#FROM games
+#INNER JOIN system_requirements
+#ON games.id = system_requirements.game_id
+#INNER JOIN graphics
+#ON system_requirements.graphic_id = graphics.id
+#WHERE graphics.rank >= (SELECT rank FROM processors WHERE id = #{params[:graphic]})
+#      """
       @games = ActiveRecord::Base.connection.execute(sql)
       @search_title = "Games You can Run"
       render "search_result_sys_req"
