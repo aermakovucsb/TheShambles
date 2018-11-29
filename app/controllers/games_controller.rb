@@ -5,6 +5,14 @@ class GamesController < ApplicationController
   before_action :require_admin, only: [:create, :new, :edit, :update, :destroy]
   before_action :require_user_like, only: [:like]
 
+  # GET /games/stats
+  def stats
+    game = Game.find(params[:id])
+    likes = game.likes.where(like: true).count
+    dislikes = game.likes.where(like: false).count
+    render html: "likes:#{likes} | dislikes:#{dislikes}"
+  end
+
   # GET /games
   # GET /games.json
   def index
