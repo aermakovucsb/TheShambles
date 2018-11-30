@@ -6,7 +6,6 @@
 <div class="text-center">
   <%= will_paginate @games %>
 </div>
-	  <% cache('table_of_all_games') do %>
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
@@ -46,7 +45,6 @@
   <% end %>
   </tbody>
 </table>
-      <% end %>
 <div class="text-center">
   <%= will_paginate @games %>
 </div>
