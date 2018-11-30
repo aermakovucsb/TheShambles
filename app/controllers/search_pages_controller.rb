@@ -60,31 +60,81 @@ class SearchPagesController < ApplicationController
       processor_rank = Processor.select('rank').find(params[:processor]).rank
       memory_rank = Memory.select('rank').find(params[:memory]).rank
       graphic_rank = Graphic.select('rank').find(params[:graphic]).rank
-      sql = """
-SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+sql = 
+"""SELECT games.id
 FROM games
 INNER JOIN system_requirements
 ON games.id = system_requirements.game_id
 INNER JOIN processors
 ON system_requirements.processor_id = processors.id
 WHERE processors.rank >= #{processor_rank}
-INTERSECT
-SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+"""
+      processors = ActiveRecord::Base.connection.execute(sql)
+      processorIDs = []
+      processors.each do |processor|
+	processorIDs << processor["id"]
+      end
+sql = 
+"""SELECT games.id
 FROM games
 INNER JOIN system_requirements
 ON games.id = system_requirements.game_id
 INNER JOIN memories
 ON system_requirements.memory_id = memories.id
 WHERE memories.rank >= #{memory_rank}
-INTERSECT
-SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+"""
+      memories = ActiveRecord::Base.connection.execute(sql)
+      memoryIDs = []
+      memories.each do |memory|
+	memoryIDs << memory["id"]
+      end
+sql = 
+"""SELECT games.id
 FROM games
 INNER JOIN system_requirements
 ON games.id = system_requirements.game_id
 INNER JOIN graphics
 ON system_requirements.graphic_id = graphics.id
 WHERE graphics.rank >= #{graphic_rank}
+"""
+      graphics = ActiveRecord::Base.connection.execute(sql)
+      graphicIDs = []
+      graphics.each do |graphic|
+	graphicIDs << graphic["id"]
+      end
+      gameIDs = processorIDs & memoryIDs & graphicIDs
+      gameIDs = "(" + gameIDs.map(&:inspect).join(',') + ")"
+      sql = """
+      SELECT id, name, steam_id, price, release_date
+      FROM games
+      WHERE id IN #{gameIDs}
       """
+	    
+#      sql = """
+#SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+#FROM games
+#INNER JOIN system_requirements
+#ON games.id = system_requirements.game_id
+#INNER JOIN processors
+#ON system_requirements.processor_id = processors.id
+#WHERE processors.rank >= (SELECT rank FROM processors WHERE id = #{params[:processor]})
+#INTERSECT
+#SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+#FROM games
+#INNER JOIN system_requirements
+#ON games.id = system_requirements.game_id
+#INNER JOIN memories
+#ON system_requirements.memory_id = memories.id
+#WHERE memories.rank >= (SELECT rank FROM processors WHERE id = #{params[:memory]})
+#INTERSECT
+#SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+#FROM games
+#INNER JOIN system_requirements
+#ON games.id = system_requirements.game_id
+#INNER JOIN graphics
+#ON system_requirements.graphic_id = graphics.id
+#WHERE graphics.rank >= (SELECT rank FROM processors WHERE id = #{params[:graphic]})
+#      """
       @games = ActiveRecord::Base.connection.execute(sql)
       @search_title = "Games You can Run"
       render "search_result_sys_req"
