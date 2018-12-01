@@ -4,7 +4,7 @@ class SearchPagesController < ApplicationController
     if request.post?
       if params[:search_type] == "game_by_name"
 	if not params[:name].empty?
-	  @games = Game.where("name LIKE ?", "%#{params[:name]}%")
+	  @games = Game.where("name LIKE ?", "%#{params[:name]}%").paginate(page: params[:page], per_page: 10)
 	  @search_title = "Games Containing '#{params[:name]}'"
 	  render "search_result_game_by_name"
 	else
