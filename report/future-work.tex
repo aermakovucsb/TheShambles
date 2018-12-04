@@ -1,1 +1,6 @@
 \chapter{Future Work}
+From a broader perspective, there are are two major categories of improvements that can be performed as future work: one category of improvement is related to feature of the app, another category is related to improving the scalability of the app.
+
+In regards to the first category of improvement, one improvement we can make is to introduce a version of global chat which is workable in Elastic Beanstalk~\cite{eb}. Although our current version of the global chat works correctly locally, we need to refresh the page after each new message in Elastic Beanstalk. Additionally, we could try to add more features throughout various portions of our web app. For example, right now the user profile is quite rudimentary. It does not have any user related info other than name, email, password, and possibly gravatar. We could add a \textit{watchlist} for each user, which is basically a list of games that the user is tracking. This list of games along with the associated price histories would ideally pop up once the user browses to his/her profile page.
+
+In regards to the second category of improvement, we can try out different sorts of caching. Although we were able to manually show the effects of one type of caching only, ideally we would want to show the effects of different types of caching with the help of an automated tool.
