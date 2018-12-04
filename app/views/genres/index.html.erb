@@ -15,10 +15,10 @@
   </thead>
 
   <tbody>
-    <% @genres.each do |genre| %>
+    <% @genres.zip(@counts).each do |genre, count| %>
       <tr>
         <td><%= link_to genre.name, genre %></td>
-        <td><%= genre.games.count %></td>
+	<td><%#= genre.games.count %><%= count %></td>
         <% if session[:gamer_id] and session[:user_type] == "admin" %>
         <td><%= link_to 'Edit', edit_genre_path(genre) %></td>
         <td><%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' } %></td>
