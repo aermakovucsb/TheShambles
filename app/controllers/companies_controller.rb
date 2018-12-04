@@ -7,6 +7,7 @@ class CompaniesController < ApplicationController
   # GET /companies.json
   def index
     @companies = Company.all
+		@counts = ActiveRecord::Base.connection.execute('select count(*) from companies_games group by company_id order by company_id').values
   end
 
   # GET /companies/1

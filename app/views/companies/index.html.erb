@@ -15,10 +15,10 @@
   </thead>
 
   <tbody>
-    <% @companies.each do |company| %>
+    <% @companies.zip(@counts).each do |company, count| %>
       <tr>
         <td><%= link_to company.name, company %></td>
-        <td><%= company.games.count %></td>
+        <td><%= count %></td>
         <% if session[:gamer_id] and session[:user_type] == "admin" %>
         <td><%= link_to 'Edit', edit_company_path(company) %></td>
         <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -7,6 +7,7 @@ class GenresController < ApplicationController
   # GET /genres.json
   def index
     @genres = Genre.all
+		@counts = ActiveRecord::Base.connection.execute('select count(*) from games_genres group by genre_id order by genre_id').values
   end
 
   # GET /genres/1
