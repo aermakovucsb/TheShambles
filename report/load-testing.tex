@@ -1,5 +1,6 @@
 \chapter{Load Testing}
 We used Tsung~\cite{tsung} framework for load testing. We designed a \textit{generic workflow} which was able to capture the usual activities of a user while covering most, if not all, features of our website. We ran most of our tests on this generic workflow. Testing on the generic workflow gave us a rough idea on the overall performance of our website and possible bottlenecks. Later we created \textit{specific workflow} separating out the portions that we thought might be causing the greatest bottlenecks. We ran our tests on this specific workflow before and after optimization to verify that this was indeed the workflow that was causing the bottlenecks and that these have been remediated by the optimizations.
+
 \section{Generic Workflow}\label{sec:generic-workflow}
 In this workflow, at first a user logs in to the website. The user waits for a time between zero and two seconds, visits the games index page, and then waits again for a time between zero and one second. Then the user randomly visits a game page, waits for a time between zero and two seconds, comments on that game and then logs out. This concludes the first sessions of our workflow. 
 
@@ -9,10 +10,50 @@ In the third session, a user browses to the gamers index page, waits between zer
 
 In the fourth session, a user browses to the signup page, waits for zero to three seconds, submits the form, waits for zero to one second, visits the games index page, waits for zero to one second, and finally likes/dislikes a random game.
 
-\section{Specific Workflow}\label{sec:specific-workflow}
+For this workflow we had four arrival phases, the arrival rate being doubled at each consecutive phase and the very first one having an arrival rate of two users per second. Figure~\ref{fig:generic1} and ~\ref{fig:generic2} illustrate all the four sessions with the help of toned down sequence diagrams.
 
 \begin{figure}
-\centering
-\includegraphics{images/tsung/request_mean_game_index_pagination.png}
-\caption{Mean duration of pages before and after pagination for scenario in Section~\ref{sec:scenario-list-all-games}}\label{fig:effect-of-pagination-on-game-list}
+\subfloat[First session.]{%
+  \includegraphics[clip,width=\columnwidth]{images/generic-1}%
+}
+
+\subfloat[Second session.]{%
+  \includegraphics[clip,width=\columnwidth]{images/generic-2}%
+}
+\caption{First and second sessions of generic workflow.}\label{fig:generic1}
 \end{figure}
+
+\begin{figure}
+\subfloat[Third session.]{%
+  \includegraphics[clip,width=\columnwidth]{images/generic-3}%
+}
+
+\subfloat[Fourth session.]{%
+  \includegraphics[clip,width=\columnwidth]{images/generic-4}%
+}
+\caption{Third and fourth sessions of generic workflow.}\label{fig:generic2}
+\end{figure}
+
+\section{Specific Workflow}\label{sec:specific-workflow}
+It came to our observation that the number of sql queries being invoked in a couple of pages (index page of genres and companies) was higher than normal. We hypothesized optimizing the query in some way might improve our response time. Just to verify our hunch, we came up with a specific workflow and tested that before and after optimization. The exact optimization has been discussed in a later section.
+
+In this workflow, a user hits the index page for games, followed by the index pages of genres and companies. For this workflow we had four arrival phases, the arrival rate being doubled at each consecutive phase and the very first one having an arrival rate of two users per second. Figure~\ref{fig:specific} illustrates the specific workflow with the help of a toned down sequence diagram.
+
+\begin{figure}
+	\centering
+	\includegraphics{images/specific}
+	\caption{Specific workflow.}\label{fig:specific}
+\end{figure}
+
+\section{Optimization: AJAX}
+\begin{figure}
+	\centering
+	\includegraphics{images/without-any-optimization-with-ajax.pdf}
+	\caption{HTTP response counts with and without ajax.}
+\end{figure}
+
+\section{Optimization: Pagination}
+\section{Optimization: Database Indexing}
+\section{Optimization: SQL Query}
+\section{Optimization: Caching}
+\section{Scaling}
