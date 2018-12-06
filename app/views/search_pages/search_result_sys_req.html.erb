@@ -15,10 +15,10 @@
     <% @games.each do |game| %>
       <tr>        
         <%  if not game.blank? %>
-	<td><a href="/games/<%= game["id"] %>"><%= game["name"] %></a></td>
-	<td><%= link_to game["steam_id"], "https://store.steampowered.com/app/#{game["steam_id"]}", target: "_blank" %></td>
-        <td><%= game["price"] %></td>
-	<td><%= game["release_date"] %></td>
+	<td><a href="/games/<%= game[0] %>"><%= game[1] %></a></td>
+	<td><%= link_to game[2], "https://store.steampowered.com/app/#{game[2]}", target: "_blank" %></td>
+        <td><%= game[3] %></td>
+	<td><%= game[4] %></td>
         <% end %>
       </tr>
     <% end %>
