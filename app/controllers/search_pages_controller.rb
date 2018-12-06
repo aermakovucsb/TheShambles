@@ -83,7 +83,7 @@ INNER JOIN system_requirements
 ON games.id = system_requirements.game_id
 INNER JOIN graphics
 ON system_requirements.graphic_id = graphics.id
-WHERE graphics.rank >= #{graphic_rank} limit 100
+WHERE graphics.rank >= #{graphic_rank}
       """
       @games = ActiveRecord::Base.connection.execute(sql)
       @search_title = "Games You can Run"
