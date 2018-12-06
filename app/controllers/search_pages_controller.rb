@@ -83,11 +83,12 @@ INNER JOIN system_requirements
 ON games.id = system_requirements.game_id
 INNER JOIN graphics
 ON system_requirements.graphic_id = graphics.id
-WHERE graphics.rank >= #{graphic_rank}
+WHERE graphics.rank >= #{graphic_rank} limit 100
       """
       @games = Rails.cache.fetch('querybruh') do
 	      ActiveRecord::Base.connection.select_rows(sql)
       end
+#	     @games = ActiveRecord::Base.connection.select_rows(sql)
       @search_title = "Games You can Run"
       render "search_result_sys_req"
     else
