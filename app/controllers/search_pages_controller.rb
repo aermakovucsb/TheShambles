@@ -85,7 +85,7 @@ INNER JOIN graphics
 ON system_requirements.graphic_id = graphics.id
 WHERE graphics.rank >= #{graphic_rank} limit 100
       """
-      @games = Rails.cache.fetch('querybruh') do
+      @games = Rails.cache.fetch("querybruh_#{processor_rank}_#{memory_rank}_#{graphic_rank}") do
 	      ActiveRecord::Base.connection.select_rows(sql)
       end
 #	     @games = ActiveRecord::Base.connection.select_rows(sql)
