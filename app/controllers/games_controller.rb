@@ -26,11 +26,11 @@ class GamesController < ApplicationController
     #fresh_when last_modified: @game.updated_at
     @comment = Comment.new
     @comments = @game.comments.paginate(page: params[:page], per_page: 5)
-    @price_histories = Rails.cache.fetch('price_histories'){@game.price_histories}
-    @system_requirement = Rails.cache.fetch('system_requirement'){@game.system_requirement}
-    @backgrounds = Rails.cache.fetch('backgrounds'){@game.backgrounds}
-    @cards = Rails.cache.fetch('cards'){@game.cards}
-    @emotes = Rails.cache.fetch('emotes'){@game.emotes}
+    @price_histories = Rails.cache.fetch("price_histories_#{@game.id}"){@game.price_histories}
+    @system_requirement = Rails.cache.fetch("system_requirement_#{@game.id}"){@game.system_requirement}
+    @backgrounds = Rails.cache.fetch("backgrounds_#{@game.id}"){@game.backgrounds}
+    @cards = Rails.cache.fetch("cards_#{@game.id}"){@game.cards}
+    @emotes = Rails.cache.fetch("emotes_#{@game.id}"){@game.emotes}
     #@comments = @game.comments
   end
 
