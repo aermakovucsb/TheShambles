@@ -9,51 +9,26 @@
 
   <!-- Server side setup -->
   <servers>
-        <server host="tsap.zm7nup4fs2.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
+        <server host="tsnap.zm7nup4fs2.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
   </servers>
 
 
    <load>
-    <arrivalphase phase="1" duration="30" unit="second" wait_all_sessions_end="true">
+    <arrivalphase phase="1" duration="60" unit="second" wait_all_sessions_end="true">
       <users arrivalrate="2" unit="second"></users>
     </arrivalphase>
 
-    <arrivalphase phase="2" duration="30" unit="second" wait_all_sessions_end="true">
+    <arrivalphase phase="2" duration="60" unit="second" wait_all_sessions_end="true">
      <users arrivalrate="4" unit="second"></users>
     </arrivalphase>
 
-    <arrivalphase phase="3" duration="30" unit="second" wait_all_sessions_end="true">
+    <arrivalphase phase="3" duration="60" unit="second" wait_all_sessions_end="true">
       <users arrivalrate="8" unit="second"></users>
     </arrivalphase>
 
-    <arrivalphase phase="4" duration="30" unit="second" wait_all_sessions_end="true">
+    <arrivalphase phase="4" duration="60" unit="second" wait_all_sessions_end="true">
       <users arrivalrate="16" unit="second"></users>
     </arrivalphase>
-<!--
-    <arrivalphase phase="5" duration="30" unit="second">
-      <users arrivalrate="32" unit="second"></users>
-    </arrivalphase>
-
-    <arrivalphase phase="6" duration="30" unit="second">
-      <users arrivalrate="64" unit="second"></users>
-    </arrivalphase>
-
-    <arrivalphase phase="7" duration="30" unit="second">
-      <users arrivalrate="128" unit="second"></users>
-    </arrivalphase>
-
-    <arrivalphase phase="8" duration="30" unit="second">
-      <users arrivalrate="256" unit="second"></users>
-    </arrivalphase>
-
-    <arrivalphase phase="9" duration="30" unit="second">
-      <users arrivalrate="512" unit="second"></users>
-    </arrivalphase>
-
-    <arrivalphase phase="10" duration="30" unit="second">
-      <users arrivalrate="1024" unit="second"></users>
-    </arrivalphase>
--->
 
 </load>
 
@@ -68,50 +43,15 @@
   </options>
 
   <sessions>
-    <session name="http-example" probability="100" type="ts_http">
-      <setdynvars sourcetype="file" fileid="gamesFile" delimiter="," order="random">
-        <var name="gameid" />
-        <var name="appid" />
-      </setdynvars>
-        <transaction name="getListPages">
-          
-       <thinktime value="1" random="true"></thinktime>
-	<request>
-            <http url="/games" method="GET" version="1.1"/>
-          </request>
-        
-
-	<thinktime value="1" random="true"></thinktime>
-          <request>
-            <http url="/genres" method="GET" version="1.1"/>
-          </request>
-         <thinktime value="1" random="true"></thinktime>
-          <request>
-            <http url="/companies" method="GET" version="1.1"/>
-          </request>
-       
-
-
-	 </transaction>
-    </session>
-
-
-<!--
-          <thinktime value="1" random="true"></thinktime>
-          <request subst="true">
-            <http url="/games/%%_gameid%%" method="GET" version="1.1"/>
-          </request>
-          <thinktime value="2" random="true"></thinktime>
- 
+    <session name="http-example" probability="100" type="ts_http"> 
          <request subst="true">
             <http url="/search_pages/search" method="POST" version="1.1" 
-                contents="graphic=10&amp;
-                          memory=10&amp;
-                          processor=10&amp;
+                contents="graphic=1&amp;
+                          memory=1&amp;
+                          processor=1&amp;
 			  search_type=sys_req"/>
           </request>
--->
-
+    </session>
 
   </sessions>
 </tsung>
