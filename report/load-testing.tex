@@ -89,7 +89,7 @@ Once all the feasible optimizations were applied to our website, we ran Tsung lo
 
 In this test, the users arrival rate was modeled in four phases with phase 1 beginning with 2 users/second arrival rate. The arrival rate increased by a factor of 2 during subsequent phases with phase 4 having 16 users arriving per second to carry out the transactions set out in the Tsung XML file. 
 
-We started off with a c5 large app server instance and a m4 large database server instance for this test. This combination yielded a significant number of 5xx errors at the end of the test (2612). In the next run, we increased the number of app server to 3 while keeping the same database server. This combination did not result in any significant improvement as we still had 2421 5xx errors. We then ran the test with 10 app servers (maintaining the same database instance type) and interestingly enough noticed a spike in the number of 5xx (2610). This result made it apparent that the true bottleneck of our website is in the database. To solve the problem, we tried a combination of 2 instances of a c5 large app server and m4.4xlarge database instance type. This hardware mixture produced no 5xx error was . This test also highlighted the delicate balance that exists between horizontal and vertical scaling. Figure 3.8 shows the mean response time that was achieved by different hardware configurations we tried during this test.
+We started off with a c5 large app server instance and a m4 large database server instance for this test. This combination yielded a significant number of 5xx errors at the end of the test (2612). In the next run, we increased the number of app server to 3 while keeping the same database server. This combination did not result in any significant improvement as we still had 2421 5xx errors. We then ran the test with 10 app servers (maintaining the same database instance type) and interestingly enough noticed a spike in the number of 5xx (2610). This result made it apparent that the true bottleneck of our website is in the database. To solve the problem, we tried a combination of 2 instances of a c5 large app server and m4.4xlarge database instance type. This was the hardware mixture that produced no 5xx error. This test also highlighted the delicate balance that exists between horizontal and vertical scaling. Figure 3.8 shows the mean response time that was achieved by different hardware configurations we tried during this test. From this figure,w e can see that apart from the ideal hardware combination, the other combinations took longer time on average to complete a request made by a user once the arrival rate increased.
 
 \begin{figure}[h]
 	\centering
@@ -99,48 +99,54 @@ We started off with a c5 large app server instance and a m4 large database serve
 
 \subsection{Results for up to 32 users/second arrival rate}
  The users' arrival rate was increased up to 32 per second for this test. We started by keeping the exact hardware combination that produced the best result while handling arrival rate of up to 16 users/second (2 instances of c5.large and a m4.4xl database instance). This combination resulted in 201 5xx errors. Before getting a bigger database instance, we tried to horizontally scale the app server to 4 instances of c5.large. The combination of 4 c5.large app server instances and a m4.4xlarge database server was able to complete the test without resulting in any 5xx errors. Horizontal scaling worked perfectly for this test to be able to handle 32 users/second.
- Figure 3.9 shows the mean response time that was achieved by the two different hardware configurations we tried during this test.
+ Figure 3.9 shows the mean response time that was achieved by the two different hardware configurations we tried during this test. It can be observed from this figure that the horizontal scaling resulted in pages being rendered to users much quicker than the combination that produced some number of 5xx errors. 
 
-\begin{figure}[h]
+\begin{figure*}[h]
 	\centering
-	\includegraphics[width=1\textwidth]{images/scale32.jpg}
+	\includegraphics[width=1\textwidth, height=0.5\textheight]{images/scale32.jpg}
 	\caption{Mean response time while handling up to 32 users/second}\label{fig:sqlopt}
-\end{figure}
+\end{figure*}
 
 
 \subsection{Results for up to 64 users/second arrival rate}
 We increased the arrival rate by two fold from the previous test to test our website. This test contained 4 arrival phases with the last one having user arrival rate of 64 users/second.  
 
-The test was started with the hardware combination of 4 instances of c5.large application server with a m4.4xlarge database server. This combination produced a total of 5500 5xx error. We followed this by first increasing the number of app servers to 6 and then 8. As the 5xx errors remained, we used a different type of database server instance (m4.10xlarge) with 8 instances of c5.large app server instances. This setting produced no 5xx errors while being able to handle up to 64 users/second. Figure 3.10 demonstrates the mean response time obtained for each combination of hardware we applied during this test.
+The test was started with the hardware combination of 4 instances of c5.large application server with a m4.4xlarge database server. This combination produced a total of 5500 5xx error. We followed this by first increasing the number of app servers to 6 and then 8. As the 5xx errors remained, we used a different type of database server instance (m4.10xlarge) with 8 instances of c5.large app server instances. This setting produced no 5xx errors while being able to handle up to 64 users/second. Figure 3.10 demonstrates the mean response time obtained for each combination of hardware we applied during this test. Just as in previous test cases, we can notice that the combination that yielded with no 5xx error was able to meet user generated requests much quicker as opposed to other combinations of hardware. An interesting trend is observed when we horizontally scaled the app server from 6 instances of c5.large to 8 instances. Even though we noticed a decrease in 5xx errors from the former, the latter actually took, on average, longer time to fulfill user requests. This potentially demonstrates that, aside from increased cost, adding more instances does not always produce desired result.
 
-\begin{figure}[h]
+\begin{figure*}[h]
 	\centering
-	\includegraphics[width=1\textwidth]{images/scale64.jpg}
+	\includegraphics[width=1\textwidth, height=0.5\textheight]{images/scale64.jpg}
 	\caption{Mean response time while handling up to 64 users/second}\label{fig:sqlopt}
-\end{figure}
+\end{figure*}
 
 
 \subsection{Results for up to 128 users/second arrival rate}
-The arrival rate was increased to 128 users/second for this test. The first hardware combination used were 8 instances of c5.large app server and m4.10xlarge database server instance. This combination failed to handle the increased number of arrival rate. Subsequently,we tried 10 and 12 instances of c5.large app servers with m4.16xlarge database server instance. The ideal combination for this test that resulted in no 5xx errors were 12 instances of c5.large app server instances and m4.16xlarge of a database instance. Figure 3.11 shows the mean response time each of these combination was able to provide during this test.
+The arrival rate was increased to 128 users/second for this test. The first hardware combination used were 8 instances of c5.large app server and m4.10xlarge database server instance. This combination failed to handle the increased number of arrival rate. Subsequently,we tried 10 and 12 instances of c5.large app servers with m4.16xlarge database server instance. The ideal combination for this test that resulted in no 5xx errors were 12 instances of c5.large app server instances and m4.16xlarge of a database instance. Figure 3.11 shows the mean response time each of these combination was able to provide during this test. Here too we can observe that the best combination was able to meet user request in much better time than other combinations.
 
-\begin{figure}[h]
+\begin{figure*}[h]
 	\centering
-	\includegraphics[width=1\textwidth]{images/scale128.jpg}
+	\includegraphics[width=1\textwidth, height=0.5\textheight ]{images/scale128.jpg}
 	\caption{Mean response time while handling up to 128 users/second}\label{fig:sqlopt}
-\end{figure}
+\end{figure*}
 
 
 
 \subsection{Results for up to 256 users/second arrival rate}
-In this test we attempted to determine the hardware combination that could adequately handle 256 users/second arrival rate. In the beginning, We started with 12 instances of c5.large and a ,4.16xlarge app and data base server respectively. This fell well short of meeting the set arrival rate. To tried adding 2 additional app servers but that did not succeed as well. Finally we tried the m5.24xlarge database instance type with 14 instances of c5 large app server. This resulted in only $6\%$ of 5xx errors. At this point, we attempted to utilize a different app server to see if we could overcome the barrier all together. However, our attempt to use the c5d.18xlarge app server did not succeed as the instance failed to properly load up. Figure 3.12 shows the mean response times that were noticed during the different hardware combinations we attempted for this test. 
+In this test we attempted to determine the hardware combination that could adequately handle 256 users/second arrival rate. In the beginning, We started with 12 instances of c5.large and a ,4.16xlarge app and data base server respectively. This fell well short of meeting the set arrival rate. To tried adding 2 additional app servers but that did not succeed as well. Finally we tried the m5.24xlarge database instance type with 14 instances of c5 large app server. This resulted in only $6\%$ of 5xx errors. At this point, we attempted to utilize a different app server to see if we could overcome the barrier all together. However, our attempt to use the c5d.18xlarge app server did not succeed as the instance failed to properly load up. Figure 3.12 shows the mean response times that were noticed during the different hardware combinations we attempted for this test. From figure, we can conclude that to meet with 256 user requests per second, we need a hardware configuration closer to 14 instances of c5.large app server and a m5.24xlarge database server.
 
-\begin{figure}[h]
+\begin{figure*}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{images/scale256.jpg}
 	\caption{Mean response time while handling up to 256 users/second}\label{fig:sqlopt}
-\end{figure}
+\end{figure*}
 
+\subsection {Cost Benefit Analysis}
 
-
+Figure 3.13 shows the combination of the hardware that yielded the best result for different number of users' arrival rates per second. This figure also demonstrates the daily cost associated with using each of this hardware combination, thereby easing the process of computing the cost of supporting a certain number of user at any second. Each of these hardware combinations was able to complete the Tsung load test without producing any 5xx HTTP error responses. For example, to meet up with 128 users per second (which could happen during peak time), the hardware combination of 12 c5.large app server instances with a m4.16xlarge database instance is seen to perform best. This combination cost about 7 USD per hour. On the other hand, we can see from Figure 3.13 that to meet up with 32 users/second, we only need to spend around 3 USD. Using tis information, we can be better prepared to handle various levels of users' arrivals during different times of the day.
+\begin{figure*}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{images/cost.PNG}
+	\caption{Cost against user arrival rate for different AWS hardware configurations}\label{fig:sqlopt}
+\end{figure*}
 
 
