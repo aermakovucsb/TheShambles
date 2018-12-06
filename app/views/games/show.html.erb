@@ -42,7 +42,7 @@
 
 <p class="text-center">
 <strong>System Requirements</strong>
-<% if @game.system_requirement %>
+<% if @system_requirement %>
 <table class="table table-bordered">
   <tr><td><strong>Processor</strong></td><td><% if @game.system_requirement.processor %><%= @game.system_requirement.processor.name %><% end %></td></tr>
   <tr><td><strong>Memory</strong></td><td><% if @game.system_requirement.memory %><%= @game.system_requirement.memory.name %><% end %></td></tr>
@@ -52,7 +52,7 @@
 </p>
 
 <h2 class="text-center">Backgrounds</h2>
-<% @game.backgrounds.each do |background| %>
+<% @backgrounds.each do |background| %>
 <div class="col-md-4">
 <p><img src="https://steamcommunity-a.akamaihd.net/economy/image/<%= background.image %>" class="img-responsive"></p>
 <div class="text-center"><p class="label label-success price-label">$<%= background.price %></p></div>
@@ -63,7 +63,7 @@
 <div class="clearfix"></div>
 
 <h2 class="text-center">Cards</h2>
-<% @game.cards.each do |card| %>
+<% @cards.each do |card| %>
 <div class="col-md-4">
 <p><img src="https://steamcommunity-a.akamaihd.net/economy/image/<%= card.image %>" class="img-responsive"></p>
 <div class="text-center"><p class="label label-success price-label">$<%= card.price %></p></div>
@@ -74,7 +74,7 @@
 <div class="clearfix"></div>
 
 <h2 class="text-center">Emotes</h2>
-<% @game.emotes.each do |emote| %>
+<% @emotes.each do |emote| %>
 <div class="col-md-4">
 <p><img src="https://steamcommunity-a.akamaihd.net/economy/image/<%= emote.image %>" class="img-responsive"></p>
 <div class="text-center"><p class="label label-success price-label">$<%= emote.price %></p></div>
@@ -160,7 +160,7 @@
 <script>
 var time = [];
 var price = [];
-<% @game.price_histories.each do |price_history| %>
+<% @price_histories.each do |price_history| %>
   time.push('<%= price_history.time %>');
   price.push(<%= price_history.price %>);
 <% end %>
@@ -201,3 +201,4 @@ options: {
   }
 });
 </script>
+
