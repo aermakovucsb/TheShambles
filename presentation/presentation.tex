@@ -18,11 +18,24 @@ Department of Computer Science\\
 University of California Santa Barbara}
 \titlegraphic{\includegraphics[width=0.2\textwidth]{ucsb-logo.png}}
 
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
 \begin{document}
 \newcommand{\continued}{\textit{(Cntd.)}}
 %titlepage
 \begin{frame}
 \titlepage
+\end{frame}
+
+\begin{frame}
+	\frametitle{Outline}
+	\tableofcontents
 \end{frame}
 
 \input{introduction}
