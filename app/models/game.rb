@@ -34,6 +34,34 @@ class Game < ApplicationRecord
   validates :description, presence: true
   validates :image, url: true
 
+  def self.sysReq(processor_rank, memory_rank, graphic_rank, offset, limit)
+      sql = """
+	    SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+	    FROM games
+	    INNER JOIN system_requirements
+	    ON games.id = system_requirements.game_id
+	    INNER JOIN processors
+	    ON system_requirements.processor_id = processors.id
+	    WHERE processors.rank >= #{processor_rank}
+	    INTERSECT
+	    SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+	    FROM games
+	    INNER JOIN system_requirements
+	    ON games.id = system_requirements.game_id
+	    INNER JOIN memories
+	    ON system_requirements.memory_id = memories.id
+	    WHERE memories.rank >= #{memory_rank}
+	    INTERSECT
+	    SELECT games.id, games.name, games.steam_id, games.price, games.release_date
+	    FROM games
+	    INNER JOIN system_requirements
+	    ON games.id = system_requirements.game_id
+	    INNER JOIN graphics
+	    ON system_requirements.graphic_id = graphics.id
+	    WHERE graphics.rank >= #{graphic_rank} offset #{offset} limit #{limit}
+      """
+      ActiveRecord::Base.connection.select_rows(sql)
+  end
 
 
 end

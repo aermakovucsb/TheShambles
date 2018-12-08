@@ -30,5 +30,6 @@ Rails.application.routes.draw do
   get '/chat', to: 'chatrooms#show'
   resources :messages, only: [:create]
   get '/games/stats/:id', to: 'games#stats'
+  get '/games/loadmoresysreq/:processor/:memory/:graphic/:offset/:limit', to: 'games#loadmoresysreq'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
