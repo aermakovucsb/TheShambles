@@ -60,37 +60,15 @@ class SearchPagesController < ApplicationController
       processor_rank = Processor.select('rank').find(params[:processor]).rank
       memory_rank = Memory.select('rank').find(params[:memory]).rank
       graphic_rank = Graphic.select('rank').find(params[:graphic]).rank
-      sql = """
-SELECT games.id, games.name, games.steam_id, games.price, games.release_date
-FROM games
-INNER JOIN system_requirements
-ON games.id = system_requirements.game_id
-INNER JOIN processors
-ON system_requirements.processor_id = processors.id
-WHERE processors.rank >= #{processor_rank}
-INTERSECT
-SELECT games.id, games.name, games.steam_id, games.price, games.release_date
-FROM games
-INNER JOIN system_requirements
-ON games.id = system_requirements.game_id
-INNER JOIN memories
-ON system_requirements.memory_id = memories.id
-WHERE memories.rank >= #{memory_rank}
-INTERSECT
-SELECT games.id, games.name, games.steam_id, games.price, games.release_date
-FROM games
-INNER JOIN system_requirements
-ON games.id = system_requirements.game_id
-INNER JOIN graphics
-ON system_requirements.graphic_id = graphics.id
-WHERE graphics.rank >= #{graphic_rank} limit 100
-      """
+      offset = 0
+      limit = 100
+
       @games = Rails.cache.fetch("querybruh_#{processor_rank}_#{memory_rank}_#{graphic_rank}") do
-	      ActiveRecord::Base.connection.select_rows(sql)
+	      #ActiveRecord::Base.connection.select_rows(sql)
+	      Game.sysReq(processor_rank, memory_rank, graphic_rank, offset, limit)
       end
-#	     @games = ActiveRecord::Base.connection.select_rows(sql)
       @search_title = "Games You can Run"
-      render "search_result_sys_req"
+      render "search_result_sys_req", locals: {processor: processor_rank, memory: memory_rank, graphic: graphic_rank}
     else
       #pass
     end

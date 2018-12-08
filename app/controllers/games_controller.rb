@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token, raise: false
   before_action :set_game, only: [:show, :edit, :update, :destroy, :like]
-  before_action :require_user, except: [:index, :show, :like, :stats]
+  before_action :require_user, except: [:index, :show, :like, :stats, :loadmoresysreq]
   before_action :require_admin, only: [:create, :new, :edit, :update, :destroy]
   before_action :require_user_like, only: [:like]
 
@@ -11,6 +11,20 @@ class GamesController < ApplicationController
     likes = game.likes.where(like: true).count
     dislikes = game.likes.where(like: false).count
     render html: "likes:#{likes} | dislikes:#{dislikes}"
+  end
+
+  def loadmoresysreq
+    games = Game.sysReq(params[:processor], params[:memory], params[:graphic], params[:offset], params[:limit])
+    html = ''
+    for game in games
+      html += '<tr>'
+      html += '<td><a href="/games/' + game[0].to_s + '">' + game[1] + '</a></td>'
+      html += '<td><a target="_blank" href="https://store.steampowered.com/app/' + game[2].to_s + '">' + game[2].to_s + '</a></td>'
+      html += '<td>' + game[3].to_s + '</td>'
+      html += '<td>' + game[4] + '</td>'
+      html += '</tr>'
+    end
+    render html: html
   end
 
   # GET /games
