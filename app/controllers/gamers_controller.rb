@@ -65,7 +65,7 @@ end
   end
 
   def require_admin
-  	if logged_in? && current_gamer.admin?
+  	if logged_in? && !current_gamer.admin?
   		flash[:danger]= "Only admin users can perform the action"
   		redirect_to root_path
   	end
