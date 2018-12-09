@@ -164,7 +164,6 @@ class GamesController < ApplicationController
     @game.destroy
     flash[:danger] = "This Game has been removed"
     redirect_to root_path
-    end
   end
 
   private
