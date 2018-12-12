@@ -6,6 +6,6 @@ gTrack is a web app to track games available in Steam. It allows the user to obs
 P.S The chat doesn't work on Elastic Beanstalk.
 
 ## TheShambles Team members
-Nazmus Saquib|Udit Paul|Alex
+Nazmus Saquib|Udit Paul|Alex|Michael
 :-----------:|:-------:|:--:|:------:
-<img src="pictures/nazmus-saquib.jpg" height="250px">|<img src="pictures/Paul_headshot.jpg" height="250px">|<img src="pictures/alexface.png" height="250px">
+<img src="pictures/nazmus-saquib.jpg" height="250px">|<img src="pictures/Paul_headshot.jpg" height="250px">|<img src="pictures/alexface.png" height="250px">|<img src="pictures/magzhan.jpg" height="250px">
